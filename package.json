@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "description": "一个适用于移动端的UI组件库主类。",
     "main": "ui",
-    "contributors": [
+    "maintainers": [
         { "name": "zfkun", "email": "zfkun@msn.com" }
     ],
     "contributors": [

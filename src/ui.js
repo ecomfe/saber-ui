@@ -1,5 +1,6 @@
 /**
- * Saber
+ * Saber UI
+ * Copyright 2013 Baidu Inc. All rights reserved.
  * 
  * @file UI主类
  * @author zfkun(zfkun@msn.com)
