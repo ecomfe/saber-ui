@@ -1,0 +1,18 @@
+{
+    "name": "saber-ui",
+    "version": "0.1.0",
+    "description": "一个适用于移动端的UI组件库主类。",
+    "main": "ui",
+    "contributors": [
+        { "name": "zfkun", "email": "zfkun@msn.com" }
+    ],
+    "contributors": [
+        { "name": "zfkun", "email": "zfkun@msn.com" }
+    ],
+    "dependencies": {
+        "saber-lang": "~0.1.0"
+    },
+    "license": "BSD",
+    "repository": "git://github.com/ecomfe/saber-ui.git",
+    "bugs": "https://github.com/ecomfe/saber-ui/issues"
+}
