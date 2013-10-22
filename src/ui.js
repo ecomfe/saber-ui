@@ -9,6 +9,14 @@
 define( function ( require ) {
 
     var Lang = require( 'saber-lang' );
+
+    /**
+     * 主类
+     * 提供UI全局配置、解析、构建等
+     * 
+     * @exports ui
+     * @requires lang
+     */
     var ui = {};
 
 
@@ -74,8 +82,9 @@ define( function ( require ) {
     };
 
 
+
     /**
-     * 已注册控件容器
+     * 已注册控件类的容器
      * 
      * @inner
      * @type {Object}
@@ -101,8 +110,9 @@ define( function ( require ) {
     };
 
     /**
-     * 创建控件
+     * 创建控件实例
      * 
+     * @public
      * @param {string} type 控件类型
      * @param {Object} options 控件初始化参数
      * @return {?Control} 新创建的控件实例, 失败返回null
@@ -118,21 +128,80 @@ define( function ( require ) {
         return null;
     };
 
-    ui.dispose = function ( ctrl ) {
-        // TODO
+    /**
+     * 销毁控件
+     * 
+     * @public
+     * @param {Control} control 控件实例
+     */
+    ui.dispose = function ( control ) {
+        // 实例存储容器更新
+        if ( controls[ control.id ] ) {
+            delete controls[ control.id ];
+        }
+
+        control.dispose();
     };
 
 
 
+    /**
+     * 已存储控件实例的容器
+     * 以实例id为键值存储映射关系
+     * 
+     * @inner
+     * @type {Object}
+     */
+    var controls = {};
+
+    /**
+     * 存储控件实例
+     * 
+     * @public
+     * @param {Control} control 待加控件实例
+     */
+    ui.add = function( control ) {
+        var exists = controls[ control.id ];
+
+        // 根据传入实例的id检索当前存储:
+        // 若 不存在，直接加入存储
+        // 若 存在, 但不是同一实例，则替换更新
+        if ( !exists || exists !== control ) {
+            // 存储(或更新)实例
+            controls[ control.id ] = control;
+        }
+    };
+
+    /**
+     * 通过id获取控件实例。 
+     *
+     * @public
+     * @param {string} id 控件id
+     * @return {Control} 根据id获取的控件实例
+     */
     ui.get = function ( id ) {
-        // TODO
-        return components;
+        return controls[ id ];
     };
 
+
+
+    /**
+     * 从容器DOM元素批量初始化内部的控件渲染
+     * 
+     * @public
+     * @param {HTMLElement=} wrap 容器DOM元素，默认document.body
+     * @param {Object=} options 初始化配置参数
+     * @param {Object=} options.properties 属性集合，通过id映射
+     * @param {Object=} options.valueReplacer 属性值替换函数
+     * @return {Array.<Control>} 初始化的控件对象集合
+     */
     ui.init = function ( wrap, options ) {
+        wrap = wrap || document.body;
+        options = options || {};
+
         // TODO
     };
 
 
     return ui;
-});
+} );
