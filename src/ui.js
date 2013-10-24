@@ -6,9 +6,9 @@
  * @author zfkun(zfkun@msn.com)
  */
 
-define( function ( require ) {
+define(function ( require ) {
 
-    var Lang = require( 'saber-lang' );
+    var lang = require( 'saber-lang' );
 
     /**
      * 主类
@@ -67,7 +67,7 @@ define( function ( require ) {
      * @param {Object} info 控件库配置信息对象
      */
     ui.config = function ( info ) {
-        Lang.extend( config, info );
+        lang.extend( config, info );
     };
 
     /**
@@ -204,4 +204,5 @@ define( function ( require ) {
 
 
     return ui;
-} );
+
+});
