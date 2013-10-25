@@ -20,27 +20,6 @@ define(function ( require ) {
     var ui = {};
 
 
-    /**
-     * GUID生成基数
-     * 
-     * @inner
-     * @type {number}
-     */
-    var counter = 0x861005;
-
-    /**
-     * 生成全局唯一id
-     * 
-     * @public
-     * @param {string=} prefix 前缀
-     * @return {string} 新唯一id字符串
-     */
-    ui.getGUID = function ( prefix ) {
-        prefix = prefix || 'sui';
-        return prefix + counter++;
-    };
-
-
 
     /**
      * 控件库配置数据
@@ -49,15 +28,30 @@ define(function ( require ) {
      * @type {Object}
      */
     var config = {
+        // 控件主元素的id前缀
+        // 控件`render`阶段自动生成时用到
+        // see `Control.render` 中的 `helper.getId( this )`
+        idAttrPrefix: 'ctrl',
+
         // 基于已有的DOM结构创建控件时，
         // ui控件的html attribute前缀
         uiPrefix: 'data-ui',
 
+        // 控件的实例标识属性
+        instanceAttr: 'data-ctrl-id',
+
         // 控件的默认class前缀
         uiClassPrefix: 'ui',
 
+        // 控件的皮肤class前缀
+        skinClassPrefix: 'skin',
+
         // 控件的状态class前缀
-        stateClassPrefix: 'state'
+        stateClassPrefix: 'state',
+
+        // 所有控件的公共class名(不包含前缀)
+        // 为了定义有限全局的normalize使用
+        uiClassControl: 'ctrl'
     };
 
     /**
