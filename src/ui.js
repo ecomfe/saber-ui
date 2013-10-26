@@ -167,6 +167,16 @@ define(function ( require ) {
     };
 
     /**
+     * 移除控件实例
+     * 
+     * @public
+     * @param {Control} control 待移除控件实例
+     */
+    ui.remove = function( control ) {
+        delete controls[ control.id ];
+    };
+
+    /**
      * 通过id获取控件实例。 
      *
      * @public
