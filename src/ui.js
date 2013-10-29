@@ -121,20 +121,6 @@ define(function ( require ) {
         return null;
     };
 
-    /**
-     * 销毁控件
-     * 
-     * @public
-     * @param {Control} control 控件实例
-     */
-    ui.dispose = function ( control ) {
-        // 实例存储容器更新
-        if ( controls[ control.id ] ) {
-            delete controls[ control.id ];
-        }
-
-        control.dispose();
-    };
 
 
 
@@ -146,6 +132,7 @@ define(function ( require ) {
      * @type {Object}
      */
     var controls = {};
+
 
     /**
      * 存储控件实例
