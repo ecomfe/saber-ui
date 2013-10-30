@@ -183,6 +183,7 @@ define(function ( require ) {
      * @param {Object=} options 初始化配置参数
      * @param {Object=} options.properties 属性集合，通过id映射
      * @param {Object=} options.valueReplacer 属性值替换函数
+     * @param {Function=} options.success 渲染完成回调函数
      * @return {Array.<Control>} 初始化的控件对象集合
      */
     ui.init = function ( wrap, options ) {
@@ -204,6 +205,11 @@ define(function ( require ) {
             wrap.getElementsByTagName( '*' ),
             checkNode
         ).forEach( parseNode );
+
+        // 初始化构建通知
+        if ( 'function' === typeof options.success ) {
+            options.success( controls );
+        }
 
 
         /**
