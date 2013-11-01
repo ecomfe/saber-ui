@@ -6,9 +6,6 @@
     "maintainers": [
         { "name": "zfkun", "email": "zfkun@msn.com" }
     ],
-    "contributors": [
-        { "name": "zfkun", "email": "zfkun@msn.com" }
-    ],
     "dependencies": {
         "saber-lang": "~0.2.0"
     },
