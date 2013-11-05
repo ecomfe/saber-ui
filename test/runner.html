@@ -24,7 +24,7 @@
             {
                 name: 'saber-ui',
                 location: '../src',
-                main: 'ui'
+                main: 'main'
             }
 
         ]
@@ -41,9 +41,18 @@
             return htmlReporter.specFilter(spec);
         };
 
-        require( [ 'ui.test' ], function() {
-            jasmineEnv.execute();
-        });
+        require(
+            [
+                'config.test',
+                'component.test',
+                'control.test',
+                'parse.test',
+                'init.test'
+            ],
+            function () {
+                jasmineEnv.execute();
+            }
+        );
     })();
     </script>
 </body>
