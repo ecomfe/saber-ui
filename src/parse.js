@@ -12,8 +12,8 @@ define(function () {
      * 解析器
      * 对DOM元素解析，从而为构建器提供初始化数据)
      * 
-     * @member ui
-     * @exports module:ui~parse
+     * @mixin
+     * @module saber-ui/parse
      * @type {Object}
      */
     var exports = {};
@@ -21,6 +21,7 @@ define(function () {
     /**
      * 将"name:value[;name:value]"的属性值解析成Object
      * 
+     * @public
      * @param {string} source 属性值源字符串
      * @param {Function=} 替换值的处理函数
      * @return {Object}

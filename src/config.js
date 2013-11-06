@@ -14,8 +14,8 @@ define(function ( require ) {
      * 配置器
      * UI全局配置管理及查询
      * 
-     * @member ui
-     * @exports module:ui~config
+     * @mixin
+     * @module saber-ui/config
      * @type {Object}
      */
     var exports = {};

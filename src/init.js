@@ -15,8 +15,8 @@ define(function ( require ) {
     /**
      * 构建器
      * 
-     * @member ui
-     * @exports module:ui~init
+     * @mixin
+     * @module saber-ui/init
      * @type {Object}
      */
     var exports = {};

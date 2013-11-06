@@ -14,19 +14,23 @@ define(function ( require ) {
      * 主类
      * 提供UI全局配置、注册、管理、解析、构建等
      * 
-     * @module ui
-     * @exports ui
-     * @requires lang~extend
-     * @requires ui~config
-     * @requires ui~component
-     * @requires ui~control
-     * @requires ui~parse
-     * @requires ui~init
+     * @exports saber-ui
+     * @mixes module:saber-ui/config
+     * @mixes module:saber-ui/component
+     * @mixes module:saber-ui/control
+     * @mixes module:saber-ui/parse
+     * @mixes module:saber-ui/init
+     * @requires saber-lang/extend
+     * @requires saber-ui/config
+     * @requires saber-ui/component
+     * @requires saber-ui/control
+     * @requires saber-ui/parse
+     * @requires saber-ui/init
      */
-    var ui = {};
+    var exports = {};
 
     extend(
-        ui,
+        exports,
         require( './config' ),
         require( './component' ),
         require( './control' ),
@@ -34,6 +38,6 @@ define(function ( require ) {
         require( './init' )
     );
 
-    return ui;
+    return exports;
 
 });

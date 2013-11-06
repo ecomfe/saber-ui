@@ -12,8 +12,8 @@ define(function () {
      * 实例管理器
      * 所有已注册控件实例的查询、管理
      * 
-     * @member ui
-     * @exports module:ui~control
+     * @mixin
+     * @module saber-ui/control
      * @type {Object}
      */
     var exports = {};

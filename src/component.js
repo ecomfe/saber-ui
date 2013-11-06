@@ -12,8 +12,8 @@ define(function () {
      * 组件管理器
      * 注册新组件或创建已注册组件
      * 
-     * @member ui
-     * @exports module:ui~component
+     * @mixin
+     * @module saber-ui/component
      * @type {Object}
      */
     var exports = {};
