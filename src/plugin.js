@@ -61,7 +61,7 @@ define(function () {
     };
 
     exports.inactive = function () {
-        // TODO: 待 saber-scroll 实现API
+        // TODO:
     };
 
     /**
