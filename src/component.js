@@ -34,7 +34,7 @@ define(function () {
      * @param {Function} component 控件类
      */
     exports.register = function ( component ) {
-        if ( typeof component === 'function' ) {
+        if ( 'function' === typeof component ) {
             var type = component.prototype.type;
             if ( type in components ) {
                 throw new Error( type + ' is exists!' );

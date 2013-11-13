@@ -12,7 +12,7 @@ define(function ( require ) {
 
     /**
      * 主类
-     * 提供UI全局配置、注册、管理、解析、构建等
+     * 提供UI全局配置、注册、管理、插件、解析、构建等
      * 
      * @exports saber-ui
      * @mixes module:saber-ui/config
@@ -24,6 +24,7 @@ define(function ( require ) {
      * @requires saber-ui/config
      * @requires saber-ui/component
      * @requires saber-ui/control
+     * @requires saber-ui/plugin
      * @requires saber-ui/parse
      * @requires saber-ui/init
      */
@@ -34,6 +35,7 @@ define(function ( require ) {
         require( './config' ),
         require( './component' ),
         require( './control' ),
+        require( './plugin' ),
         require( './parse' ),
         require( './init' )
     );
