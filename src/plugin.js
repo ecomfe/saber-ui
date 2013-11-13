@@ -80,7 +80,7 @@ define(function () {
             return;
         }
 
-        if ( isArray( pluginName ) ) {
+        if ( Array.isArray( pluginName ) ) {
             names = pluginName;
         }
         else if ( !pluginName ) {
@@ -97,17 +97,6 @@ define(function () {
             }
         });
     };
-
-    /**
-     * 判断是否为数组
-     * 
-     * @inner
-     * @param {*} obj 待检测对象
-     * @return {boolean}
-     */
-    function isArray( obj ) {
-        return 'Array' === Object.prototype.toString.call( obj ).slice(8, -1);
-    }
 
     return exports;
 
