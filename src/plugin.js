@@ -32,7 +32,7 @@ define(function () {
      * @public
      * @param {Function} plugin 插件类
      */
-    exports.register = function ( plugin ) {
+    exports.registerPlugin = function ( plugin ) {
         if ( 'function' === typeof plugin ) {
             var type = plugin.prototype.type;
             if ( type in plugins ) {
@@ -51,7 +51,7 @@ define(function () {
      * @param {String} pluginName 待激活插件名
      * @param {Object=} options 插件配置项
      */
-    exports.active = function ( control, pluginName, options ) {
+    exports.activePlugin = function ( control, pluginName, options ) {
         var activedPlugins = control.plugins || ( control.plugins = {} );
         var plugin = activedPlugins[ pluginName ];
 
@@ -60,8 +60,17 @@ define(function () {
         }
     };
 
-    exports.inactive = function () {
-        // TODO:
+    /**
+     * 禁用插件
+     * 暂时无用，视后续需要补充
+     * 
+     * @public
+     * @param {Control} control 目标控件实例
+     * @param {(String= | Array=)} pluginName 待禁用插件名
+     * 单个禁用传入插件名, 批量禁用传入数组, 全部禁用不传入
+     */
+    exports.inactivePlugin = function () {
+        // TODO: 暂时无用，视后续需要补充
     };
 
     /**
@@ -70,9 +79,9 @@ define(function () {
      * @public
      * @param {Control} control 目标控件实例
      * @param {(String= | Array=)} pluginName 待销毁插件名
-     * 批量删除传入数组, 全部删除不传入
+     * 单个删除传入插件名, 批量删除传入数组, 全部删除不传入
      */
-    exports.dispose = function ( control, pluginName ) {
+    exports.disposePlugin = function ( control, pluginName ) {
         var activedPlugins = control.plugins;
         var names;
 

@@ -18,6 +18,7 @@ define(function ( require ) {
      * @mixes module:saber-ui/config
      * @mixes module:saber-ui/component
      * @mixes module:saber-ui/control
+     * @mixes module:saber-ui/plugin
      * @mixes module:saber-ui/parse
      * @mixes module:saber-ui/init
      * @requires saber-lang/extend
