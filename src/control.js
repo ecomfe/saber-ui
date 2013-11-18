@@ -57,7 +57,7 @@ define(function () {
     };
 
     /**
-     * 通过id获取控件实例。 
+     * 通过id获取控件实例
      * 
      * @public
      * @param {string} id 控件id

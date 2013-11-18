@@ -1,7 +1,7 @@
 {
     "name": "saber-ui",
     "version": "0.1.0",
-    "description": "一个适用于移动端的UI组件库主类。",
+    "description": "SaberUI的公共部分",
     "main": "main",
     "maintainers": [
         { "name": "zfkun", "email": "zfkun@msn.com" }

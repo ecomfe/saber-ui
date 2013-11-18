@@ -2,7 +2,7 @@
  * Saber UI
  * Copyright 2013 Baidu Inc. All rights reserved.
  * 
- * @file UI主类
+ * @file 公共部分
  * @author zfkun(zfkun@msn.com)
  */
 
@@ -11,7 +11,7 @@ define(function ( require ) {
     var extend = require( 'saber-lang/extend' );
 
     /**
-     * 主类
+     * 公共部分
      * 提供UI全局配置、注册、管理、插件、解析、构建等
      * 
      * @exports saber-ui

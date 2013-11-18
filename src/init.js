@@ -27,7 +27,7 @@ define(function ( require ) {
      * @public
      * @param {HTMLElement=} wrap 容器DOM元素，默认document.body
      * @param {Object=} options 初始化配置参数
-     * @param {Object=} options.properties 属性集合，通过id映射
+     * @param {Object=} options.properties 自定义属性集合
      * @param {Object=} options.valueReplacer 属性值替换函数
      * @param {Function=} options.success 渲染完成回调函数
      * @return {Array.<Control>} 初始化的控件对象集合

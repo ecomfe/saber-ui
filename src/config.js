@@ -36,21 +36,21 @@ define(function ( require ) {
         // ui控件的html attribute前缀
         uiPrefix: 'data-ui',
 
-        // 控件的实例标识属性
+        // 控件实例的标识属性
         instanceAttr: 'data-ctrl-id',
 
         // 控件的默认class前缀
         uiClassPrefix: 'ui',
 
-        // 控件的皮肤class前缀
+        // 控件皮肤的class前缀
         skinClassPrefix: 'skin',
 
-        // 控件的状态class前缀
+        // 控件状态的class前缀
         stateClassPrefix: 'state',
 
         // 所有控件的公共class名(不包含前缀)
         // 为了定义有限全局的normalize使用
-        uiClassControl: 'ctrl'
+        uiClassControl: ''
     };
 
     /**

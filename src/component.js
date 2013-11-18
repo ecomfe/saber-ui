@@ -28,7 +28,7 @@ define(function () {
 
     /**
      * 注册控件类。
-     * 通过类的`prototype`.`type`识别控件类型信息。
+     * 通过类的`prototype.type`识别控件类型信息。
      * 
      * @public
      * @param {Function} component 控件类

@@ -26,8 +26,8 @@ define(function () {
     var plugins = {};
 
     /**
-     * 注册插件类。
-     * 通过类的`prototype`.`type`识别插件类型信息。
+     * 注册插件类
+     * 通过类的`prototype.type`识别插件类型信息
      * 
      * @public
      * @param {Function} plugin 插件类
@@ -62,15 +62,15 @@ define(function () {
 
     /**
      * 禁用插件
-     * 暂时无用，视后续需要补充
+     * 暂时不实现，视后续需要补充
      * 
      * @public
      * @param {Control} control 目标控件实例
      * @param {(String= | Array=)} pluginName 待禁用插件名
      * 单个禁用传入插件名, 批量禁用传入数组, 全部禁用不传入
      */
-    exports.inactivePlugin = function () {
-        // TODO: 暂时无用，视后续需要补充
+    exports.inactivePlugin = function ( control, pluginName ) {
+        // TODO: 暂时不实现，视后续需要补充
     };
 
     /**
