@@ -43,6 +43,8 @@ define(function ( require ) {
         var instanceAttr = getConfig( 'instanceAttr' );
         var uiPrefix = getConfig( 'uiPrefix' );
         var uiPrefixLen = uiPrefix.length;
+        var pluginPrefix = getConfig( 'pluginPrefix' );
+        var pluginPrefixLen = pluginPrefix.length;
         var properties = options.properties || {};
         var controls = [];
 
@@ -186,7 +188,21 @@ define(function ( require ) {
             var name = attribute.name;
             var value = attribute.value;
 
-            if ( 0 === name.indexOf( uiPrefix ) ) {
+            if ( 0 === name.indexOf( pluginPrefix ) ) {
+                // 解析plugin的信息
+                var terms = name.slice( pluginPrefixLen + 1 ).split( '-' );
+                var pluginName = terms[ 0 ];
+                terms.shift();
+
+                // 初始化该plugin的配置对象
+                // 并追加到控件初始化配置的`plugin`项里
+                this.plugin = this.plugin || {};
+                var plgOption = this.plugin[ pluginName ]
+                                || ( this.plugin[ pluginName ] = {} );
+
+                extendToOption( plgOption, terms, value );
+            }
+            else if ( 0 === name.indexOf( uiPrefix ) ) {
                 var terms = name.length == uiPrefixLen
                     ? []
                     : name.slice( uiPrefixLen + 1 ).split( '-' );

@@ -32,9 +32,11 @@ define(function ( require ) {
         // see `Control.render` 中的 `helper.getId( this )`
         idAttrPrefix: 'ctrl',
 
-        // 基于已有的DOM结构创建控件时，
-        // ui控件的html attribute前缀
+        // `静态化构建`时控件配置信息所在DOM属性名的前缀
         uiPrefix: 'data-ui',
+
+        // `静态化构建`时控件插件配置信息所在DOM属性名的前缀
+        pluginPrefix: 'data-ui-plugin',
 
         // 控件实例的标识属性
         instanceAttr: 'data-ctrl-id',

@@ -29,6 +29,7 @@
 
 + `idAttrPrefix`: 控件主元素的ID前缀。默认值`ctrl`
 + `uiPrefix`: 静态化构建时控件配置信息所在DOM属性名的前缀。默认值`data-ui`
++ `uiPluginPrefix`: 静态化构建时控件插件配置信息所在DOM属性名的前缀。默认值`data-ui-plugin`
 + `instanceAttr`: 控件实例的标识属性名。默认值`data-ctrl-id`
 + `uiClassPrefix`: 控件的默认class前缀。默认值`ui`
 + `skinClassPrefix`: 控件皮肤的默认class前缀。默认值`skin`
