@@ -23,7 +23,7 @@ define(function() {
 
         it( '`registerPlugin`', function () {
             expect( doReg ).not.toThrow();
-            expect( doReg ).toThrow( 'plugin MyPlugin is exists!' );
+            expect( doReg ).toThrowError( 'plugin MyPlugin is exists!' );
         });
 
         it( '`activePlugin`', function () {

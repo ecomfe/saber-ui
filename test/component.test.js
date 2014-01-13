@@ -24,7 +24,7 @@ define(function() {
 
         it( '`register`', function () {
             expect( doReg ).not.toThrow();
-            expect( doReg ).toThrow( 'MyControl is exists!' );
+            expect( doReg ).toThrowError( 'MyControl is exists!' );
         });
 
         it( '`create`', function () {

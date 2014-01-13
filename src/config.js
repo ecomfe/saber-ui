@@ -52,7 +52,7 @@ define(function ( require ) {
 
         // 所有控件的公共class名(不包含前缀)
         // 为了定义有限全局的normalize使用
-        uiClassControl: ''
+        uiClassControl: 'ctrl'
     };
 
     /**
