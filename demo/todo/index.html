@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="author" content="zfkun" />
-    <title>[Please input title]</title>
+    <title>Saber • TodoMVC</title>
+    <link rel="stylesheet" href="src/base.css">
+    <link rel="stylesheet" href="src/todo.css">
+    <link rel="stylesheet" href="src/list.css">
     <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-6-10/esl.js"></script> 
     
     <script>
@@ -17,6 +20,73 @@
 </head>
 
 <body>
-[Page Body]
+
+<header>
+    <h1>todos</h1>
+</header>
+
+<section id="todoapp">
+
+    <header>
+        <input id="new-todo" placeholder="What needs to be done?" autofocus>
+    </header>
+
+    <div class="list">
+        <input id="toggle-all" type="checkbox">
+        <label for="toggle-all">Mark all as complete</label>
+        <ul id="todo-list">
+            <li title="test1">
+                <div class="view">
+                    <input type="checkbox" class="toggle">
+                    <label>test1</label>
+                    <button class="destroy"></button>
+                </div>
+                <input id="edit" class="edit" hidden>
+            </li>
+
+            <li title="test2">
+                <div class="view editing" hidden>
+                    <input type="checkbox" class="toggle">
+                    <label>test2</label>
+                    <button class="destroy"></button>
+                </div>
+                <input id="edit" class="edit" value="test2">
+            </li>
+
+            <li title="test1">
+                <div class="view completed">
+                    <input type="checkbox" class="toggle" checked>
+                    <label>test1</label>
+                    <button class="destroy"></button>
+                </div>
+                <input id="edit" class="edit" hidden>
+            </li>
+        </ul>
+    </div>
+
+    <footer>
+        <span id="todo-count"><strong>1</strong> item left</span>
+        <ul id="filters">
+            <li name="all" class="selected">
+                <a href="#/">All</a>
+            </li>
+            <li name="active">
+                <a href="#/active">Active</a>
+            </li>
+            <li name="completed">
+                <a href="#/completed">Completed</a>
+            </li>
+        </ul>
+        <button id="clear-completed" hidden>Clear completed (0)</button>
+    </footer>
+
+</section>
+
+<footer>
+    <p>Double-click to edit a todo</p>
+    <p>Created by <a href="http://saber.github.io">Saber</a></p>
+    <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+</footer>
+
 </body>
 </html>

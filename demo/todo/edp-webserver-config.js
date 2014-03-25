@@ -1,3 +1,15 @@
+var fs = require( 'fs' );
+var rin = require( 'rin' );
+
+var fileWithRin = function () {
+    return function ( context ) {
+        var path = context.conf.documentRoot + context.request.pathname;
+        var input = fs.readFileSync( path, 'utf-8' );
+        var output  = rin.compile( input );
+        context.content = output;
+    };
+};
+
 exports.port = 8848;
 exports.directoryIndexes = true;
 exports.documentRoot = __dirname;
@@ -43,6 +55,12 @@ exports.getLocations = function () {
                 stylus()
             ]
         },
+        // { 
+        //     location: /\.html($|\?)/, 
+        //     handler: [
+        //         fileWithRin()
+        //     ]
+        // },
         { 
             location: /^.*$/, 
             handler: [
