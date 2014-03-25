@@ -61,7 +61,7 @@ button {
     border-top-right-radius: 1px;
 }
 
-#new-todo,
+.add,
 .edit {
     position: relative;
     margin: 0;
@@ -87,7 +87,7 @@ button {
     font-smoothing: antialiased;
 }
 
-#new-todo {
+.add {
     padding: 16px 16px 16px 60px;
     border: none;
     background: rgba(0, 0, 0, 0.02);
@@ -101,11 +101,7 @@ button {
     border-top: 1px dotted #adadad;
 }
 
-label[for='toggle-all'] {
-    display: none;
-}
-
-#toggle-all {
+.list > .toggle-all {
     position: absolute;
     top: -42px;
     left: -4px;
@@ -114,34 +110,34 @@ label[for='toggle-all'] {
     border: none; /* Mobile Safari */
 }
 
-#toggle-all:before {
+.list > .toggle-all:before {
     content: '»';
     font-size: 28px;
     color: #d9d9d9;
     padding: 0 25px 7px;
 }
 
-#toggle-all:checked:before {
+.list > .toggle-all:checked:before {
     color: #737373;
 }
 
-#todo-list {
+.list > ul {
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-#todo-list li {
+.list > ul li {
     position: relative;
     font-size: 24px;
     border-bottom: 1px dotted #ccc;
 }
 
-#todo-list li:last-child {
+.list > ul li:last-child {
     border-bottom: none;
 }
 
-#todo-list li.editing {
+.list > ul li.editing {
     border-bottom: none;
     padding: 0;
 }
@@ -178,7 +174,7 @@ label[for='toggle-all'] {
     text-align: left;
 }
 
-#filters {
+.filters {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -187,21 +183,21 @@ label[for='toggle-all'] {
     left: 0;
 }
 
-#filters li {
+.filters li {
     display: inline;
 }
 
-#filters li a {
+.filters li a {
     color: #83756f;
     margin: 2px;
     text-decoration: none;
 }
 
-#filters li.selected a {
+.filters li.selected a {
     font-weight: bold;
 }
 
-#clear-completed {
+.clear-completed {
     float: right;
     position: relative;
     line-height: 20px;
@@ -213,22 +209,22 @@ label[for='toggle-all'] {
     box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.2);
 }
 
-#clear-completed:hover {
+.clear-completed:hover {
     background: rgba(0, 0, 0, 0.15);
     box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.3);
 }
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-    #toggle-all {
+    .list > .toggle-all {
         background: none;
-    /*
-      ShadowDOM Polyfill work around for webkit/blink bug
-      https://code.google.com/p/chromium/issues/detail?id=251510
-    */
-    background-color: transparent;
+        /*
+          ShadowDOM Polyfill work around for webkit/blink bug
+          https://code.google.com/p/chromium/issues/detail?id=251510
+        */
+        background-color: transparent;
     }
 
-    #toggle-all {
+    .list > .toggle-all {
         top: -56px;
         left: -15px;
         width: 65px;

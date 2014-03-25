@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="zfkun" />
+    <title>Saber • TodoMVC</title>
+    <link rel="stylesheet" href="src/base.css">
+    <link rel="stylesheet" href="src/todo.css">
+    <link rel="stylesheet" href="src/list.css">
+    <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-6-10/esl.js"></script> 
+    
+    <script>
+    require.config({
+        baseUrl: 'src',
+        paths: {  },
+        packages: [ ]
+    });
+    </script>
+    
+</head>
+
+<body>
+
+<header>
+    <h1>todos</h1>
+</header>
+
+<section id="todoapp">
+
+    <header>
+        <input data-ui="input" class="add" placeholder="What needs to be done?" autofocus>
+    </header>
+
+    <div data-ui="todolist" class="list">
+        <input type="checkbox" class="toggle-all">
+        <ul>
+            <li>
+                <div class="view">
+                    <input type="checkbox" class="toggle">
+                    <label>test1</label>
+                    <button class="destroy"></button>
+                </div>
+                <input class="edit" hidden>
+            </li>
+            <li>
+                <div class="view editing" hidden>
+                    <input type="checkbox" class="toggle">
+                    <label>test2</label>
+                    <button class="destroy"></button>
+                </div>
+                <input class="edit" value="test2">
+            </li>
+            <li>
+                <div class="view completed">
+                    <input type="checkbox" class="toggle" checked>
+                    <label>test1</label>
+                    <button class="destroy"></button>
+                </div>
+                <input class="edit" hidden>
+            </li>
+        </ul>
+    </div>
+
+    <footer>
+        <span id="todo-count"><strong>1</strong> item left</span>
+        <ul data-ui="filter" class="filters">
+            <li name="all" class="selected">
+                <a href="#/">All</a>
+            </li>
+            <li name="active">
+                <a href="#/active">Active</a>
+            </li>
+            <li name="completed">
+                <a href="#/completed">Completed</a>
+            </li>
+        </ul>
+        <button data-ui="button" class="clear-completed" hidden>Clear completed (0)</button>
+    </footer>
+
+</section>
+
+<footer>
+    <p>Double-click to edit a todo</p>
+    <p>Created by <a href="http://saber.github.io">Saber</a></p>
+    <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+</footer>
+
+<script>
+    require(['app'], function (app) {
+        app.init();
+    });
+</script>
+</body>
+</html>
