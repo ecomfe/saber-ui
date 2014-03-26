@@ -1,0 +1,40 @@
+<!-- target:attrsStringfy -->
+<!-- for: ${attrs} as ${attr}, ${key} -->
+<!-- if: (${attr} === '') -->
+ ${key}
+<!-- else -->
+ ${key}="${attr}"
+<!-- /if -->
+<!-- /for -->
+
+<!-- target:s-filter -->
+<!-- if: ${pos} == 'start' -->
+<ul data-ui="filter" class="filters">
+<!-- /if -->
+<!-- if: ${pos} == 'end' -->
+</ul>
+<!-- /if -->
+
+<!-- target:s-button -->
+<!-- if: ${pos} == 'start' -->
+<button data-ui="button" <!-- use: attrsStringfy(attrs=${attrs}) -->>
+<!-- /if -->
+<!-- if: ${pos} == 'end' -->
+</button>
+<!-- /if -->
+
+<!-- target:s-input -->
+<!-- if: ${pos} == 'start' -->
+<input data-ui="input" <!-- use: attrsStringfy(attrs=${attrs}) --> />
+<!-- /if -->
+
+<!-- target:s-todolist -->
+<!-- if: ${pos} == 'start' -->
+<div data-ui="todolist" class="list">
+    <input type="checkbox" class="toggle-all">
+    <ul>
+<!-- /if -->
+<!-- if: ${pos} == 'end' -->
+    </ul>
+</div>
+<!-- /if -->

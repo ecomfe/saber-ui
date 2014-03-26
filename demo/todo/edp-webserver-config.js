@@ -1,14 +1,6 @@
 var fs = require( 'fs' );
+var path = require( 'path' );
 var rin = require( 'rin' );
-
-var fileWithRin = function () {
-    return function ( context ) {
-        var path = context.conf.documentRoot + context.request.pathname;
-        var input = fs.readFileSync( path, 'utf-8' );
-        var output  = rin.compile( input );
-        context.content = output;
-    };
-};
 
 exports.port = 8848;
 exports.directoryIndexes = true;
@@ -55,12 +47,13 @@ exports.getLocations = function () {
                 stylus()
             ]
         },
-        // { 
-        //     location: /\.html($|\?)/, 
-        //     handler: [
-        //         fileWithRin()
-        //     ]
-        // },
+        { 
+            location: /\.html($|\?)/, 
+            handler: [
+                file(),
+                fileWithRin()
+            ]
+        },
         { 
             location: /^.*$/, 
             handler: [
@@ -75,4 +68,20 @@ exports.injectResource = function ( res ) {
     for ( var key in res ) {
         global[ key ] = res[ key ];
     }
+};
+
+function fileWithRin() {
+    return function ( context ) {
+
+        var input = context.content.toString('utf-8');
+
+        var mytags = fs.readFileSync( path.resolve( __dirname, 'tags.html' ), 'utf-8' );
+        
+        rin.replace(mytags.replace(/\r?\n/g, ''));
+
+        var output = rin.compile( input );
+
+        context.content = output;
+
+    };
 };

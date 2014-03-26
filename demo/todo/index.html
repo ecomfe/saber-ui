@@ -28,17 +28,49 @@
 <section id="todoapp">
 
     <header>
-        <s-input class="add" autofocus>What needs to be done?</s-input>
+        <s-input class="add" autofocus placeholder="What needs to be done?" />
     </header>
 
     <s-todolist>
-        <h1>test1</h1>
-        <h1 data-complete>test2</h1>
+        <li>
+            <div class="view">
+                <input type="checkbox" class="toggle">
+                <label>test1</label>
+                <button class="destroy"></button>
+            </div>
+            <input class="edit" hidden>
+        </li>
+        <li>
+            <div class="view editing" hidden>
+                <input type="checkbox" class="toggle">
+                <label>test2</label>
+                <button class="destroy"></button>
+            </div>
+            <input class="edit" value="test2">
+        </li>
+        <li>
+            <div class="view completed">
+                <input type="checkbox" class="toggle" checked>
+                <label>test1</label>
+                <button class="destroy"></button>
+            </div>
+            <input class="edit" hidden>
+        </li>
     </s-todolist>
 
     <footer>
         <span id="todo-count"><strong>1</strong> item left</span>
-        <s-filter data-list='["All","Active","Completed"]'></s-filter>
+        <s-filter>
+            <li name="all" class="selected">
+                <a href="#/">All</a>
+            </li>
+            <li name="active">
+                <a href="#/active">Active</a>
+            </li>
+            <li name="completed">
+                <a href="#/completed">Completed</a>
+            </li>
+        </s-filter>
         <s-button class="clear-completed">Clear completed (0)</s-button>
     </footer>
 
