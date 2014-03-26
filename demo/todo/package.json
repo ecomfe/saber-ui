@@ -1,0 +1,16 @@
+{
+  "name": "todo",
+  "version": "0.0.0",
+  "description": "todo demo",
+  "dependencies": {
+    "rin": "~0.0.4"
+  },
+  "devDependencies": {
+    "edp": "*"
+  },
+  "scripts": {
+    "test": "edp ws start"
+  },
+  "author": "",
+  "license": "BSD-2-Clause"
+}
