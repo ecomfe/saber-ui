@@ -1,0 +1,21 @@
+{
+    "name": "saber-ui",
+    "version": "0.2.0",
+    "description": "适合移动端的UI组件库",
+    "main": "main",
+    "maintainers": [
+        { "name": "zfkun", "email": "zfkun@msn.com" }
+    ],
+    "dependencies": {
+        "saber-lang": "~0.3.0"
+    },
+    "scripts": {
+        "test": "./node_modules/.bin/phantomjs test/run-jasmine.js test/runner.html"
+    },
+    "devDependencies": {
+        "phantomjs": "~1.9"
+    },
+    "license": "BSD",
+    "repository": "git://github.com/ecomfe/saber-ui.git",
+    "bugs": "https://github.com/ecomfe/saber-ui/issues"
+}
