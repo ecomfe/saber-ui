@@ -1,8 +1,6 @@
-# saber-ui
+# saber-ui [![Build Status](https://travis-ci.org/ecomfe/saber-ui.png)](https://travis-ci.org/ecomfe/saber-ui)
 
 适合移动端的UI组件库。
-
-提供全局配置、控件管理、插件管理、构建解析等功能
 
 
 ## Dependencies
