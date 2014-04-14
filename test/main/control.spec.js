@@ -1,11 +1,6 @@
 define(function( require ) {
 
-    var add = require( 'saber-ui/control' ).add;
-    var remove = require( 'saber-ui/control' ).remove;
-    var get = require( 'saber-ui/control' ).get;
-
-    var register = require( 'saber-ui/control' ).register;
-    var create = require( 'saber-ui/control' ).create;
+    var ui = require( 'saber-ui' );
 
     var MyControl = function ( options ) {
         options = options || {};
@@ -23,8 +18,29 @@ define(function( require ) {
     describe( 'control', function() {
 
         var doReg = function () {
-            register( MyControl );
+            ui.register( MyControl );
         };
+
+        it( 'should have method `register`', function () {
+            expect( typeof ui.register ).toEqual( 'function' );
+        });
+
+        it( 'should have method `create`', function () {
+            expect( typeof ui.create ).toEqual( 'function' );
+        });
+
+        it( 'should have method `get`', function () {
+            expect( typeof ui.get ).toEqual( 'function' );
+        });
+
+        it( 'should have method `add`', function () {
+            expect( typeof ui.add ).toEqual( 'function' );
+        });
+
+        it( 'should have method `remove`', function () {
+            expect( typeof ui.remove ).toEqual( 'function' );
+        });
+
 
         it( '`register`', function () {
             expect( doReg ).not.toThrow();
@@ -32,7 +48,7 @@ define(function( require ) {
         });
 
         it( '`create`', function () {
-            var control = create(
+            var control = ui.create(
                 'MyControl',
                 { type: 'SubControl', name: 'saber' }
             );
@@ -49,26 +65,26 @@ define(function( require ) {
         var ctrl2 = { id: 'ctrl2', name: '222' };
         var ctrl3 = { id: 'ctrl3', name: '333' };
 
-        add( ctrl1 );
-        add( ctrl2 );
+        ui.add( ctrl1 );
+        ui.add( ctrl2 );
 
         it( '`get`', function () {
-            expect( get( 'ctrl1' ) ).toEqual( ctrl1 );
-            expect( get( 'ctrl2' ) ).toEqual( ctrl2 );
-            expect( get( 'ctrl3' ) ).not.toBeDefined();
-            expect( get( 'ctrl4' ) ).not.toBeDefined();
+            expect( ui.get( 'ctrl1' ) ).toEqual( ctrl1 );
+            expect( ui.get( 'ctrl2' ) ).toEqual( ctrl2 );
+            expect( ui.get( 'ctrl3' ) ).not.toBeDefined();
+            expect( ui.get( 'ctrl4' ) ).not.toBeDefined();
         });
 
         it( '`add`', function () {
-            expect( get( 'ctrl1' ) ).toEqual( ctrl1 );
-            expect( get( 'ctrl2' ) ).toEqual( ctrl2 );
-            expect( get( 'ctrl3' ) ).not.toBeDefined();
-            expect( get( 'ctrl4' ) ).not.toBeDefined();
+            expect( ui.get( 'ctrl1' ) ).toEqual( ctrl1 );
+            expect( ui.get( 'ctrl2' ) ).toEqual( ctrl2 );
+            expect( ui.get( 'ctrl3' ) ).not.toBeDefined();
+            expect( ui.get( 'ctrl4' ) ).not.toBeDefined();
         });
 
         it( '`remove`', function () {
-            remove( ctrl2 );
-            expect( get( 'ctrl2' ) ).not.toBeDefined();
+            ui.remove( ctrl2 );
+            expect( ui.get( 'ctrl2' ) ).not.toBeDefined();
         });
 
     });

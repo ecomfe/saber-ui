@@ -1,7 +1,6 @@
 define(function() {
 
-    var registerControl = require( 'saber-ui/control' ).register;
-    var init = require( 'saber-ui/init' ).init;
+    var ui = require( 'saber-ui' );
 
     var Control = function ( options ) {
         options = options || {};
@@ -16,11 +15,15 @@ define(function() {
         getName: function () { return this.name; }
     };
 
-    registerControl( Control );
+    ui.register( Control );
 
     describe( 'init', function() {
 
-        it( '`init`', function () {
+        it( 'should have method `init`', function () {
+            expect( typeof ui.init ).toEqual( 'function' );
+        });
+
+        it( 'should `init` exec correct', function () {
             var wrap = document.createElement('div');
             wrap.style.display = 'none';
             document.body.appendChild( wrap );
@@ -32,7 +35,7 @@ define(function() {
                 + '</ul></div>'
                 + '<div data-ui="type:OtherControl;id:c4;name: other;"></div>';
 
-            var controls = init( wrap );
+            var controls = ui.init( wrap );
 
             expect( controls[0] instanceof Control ).toBeTruthy();
             expect( controls[0].id ).toEqual( 'c1' );

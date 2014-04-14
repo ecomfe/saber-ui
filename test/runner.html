@@ -25,6 +25,18 @@
             },
 
             {
+                name: 'saber-dom',
+                location: '../dep/saber-dom/0.4.0/src',
+                main: 'main'
+            },
+
+            {
+                name: 'saber-emitter',
+                location: '../dep/saber-emitter/0.4.0/src',
+                main: 'emitter'
+            },
+
+            {
                 name: 'saber-ui',
                 location: '../src',
                 main: 'main'
@@ -37,11 +49,11 @@
     require(
         [
             'boot',
-            'config.spec',
-            'control.spec',
-            'plugin.spec',
-            'parse.spec',
-            'init.spec'
+            'main/config.spec',
+            'main/control.spec',
+            'main/plugin.spec',
+            'main/parse.spec',
+            'main/init.spec'
         ],
         function ( boot ) {
             boot();

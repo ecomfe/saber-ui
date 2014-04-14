@@ -1,12 +1,16 @@
 define(function() {
 
-    var parseAttribute = require( 'saber-ui/parse' ).parseAttribute;
+    var ui = require( 'saber-ui' );
 
     describe( 'parse', function() {
 
+        it( 'should have method `parseAttribute`', function () {
+            expect( typeof ui.parseAttribute ).toEqual( 'function' );
+        });
+
         it( '`parseAttribute`', function () {
             var source = 'type: MyControl; id: foo; name: bar; age: 99;';
-            var obj = parseAttribute( source );
+            var obj = ui.parseAttribute( source );
             expect(
                 Object.prototype.toString.call( obj )
             ).toEqual( '[object Object]' );
@@ -16,7 +20,7 @@ define(function() {
             expect( obj.age ).toEqual( '99' );
 
             var source2 = 'type:   MyControl;    id: foo;name: bar';
-            var obj2 = parseAttribute( source2 );
+            var obj2 = ui.parseAttribute( source2 );
             expect(
                 Object.prototype.toString.call( obj2 )
             ).toEqual( '[object Object]' );
