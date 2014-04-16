@@ -22,7 +22,7 @@ define( function ( require ) {
 
         constructor: Helper
 
-        // ...
+        // TODO: mixin event/dom/life/template
     };
 
     return Helper;

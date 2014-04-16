@@ -331,6 +331,23 @@ define(function ( require ) {
         },
 
         /**
+         * 销毁控件并且移除所有相关DOM
+         *
+         * @public
+         */
+        destroy: function () {
+            var main = this.main;
+
+            this.dispose();
+
+            if ( main && main.parentNode ) {
+                main.parentNode.removeChild( main );
+            }
+
+            this.main = null;
+        },
+
+        /**
          * 将控件添加到页面元素中
          *
          * @public
@@ -605,99 +622,6 @@ define(function ( require ) {
         },
 
 
-
-
-        /**
-         * 获取命名子控件
-         *
-         * @public
-         * @param {string} childName 子控件名
-         * @return {?Control} 获取到的子控件 
-         */
-        getChild: function( childName ) {
-            return this.childrenIndex[ childName ] || null;
-        },
-
-        /**
-         * 批量初始化子控件
-         *
-         * @public
-         * @param {HTMLElement} wrap 容器DOM元素
-         */
-        initChildren: function ( wrap ) {
-            // 未指定父容器元素时，这里暂时采用共享主控元素
-            // TODO 像`Button`控件得考虑适当调整(主控元素为<button>自身)
-            wrap = wrap || this.main;
-
-            // 生成初始化配置
-            // TODO
-            //     这里暂时从父控件的`options`获取
-            //     视情况定是否采用`esui`的`renderOptions`方式
-            var options = lang.extend( {}, this.options );
-            options.parent = this;
-
-            ui.init( wrap, options );
-        },
-
-        /**
-         * 添加子控件
-         *
-         * @public
-         * @param {Control} control 控件实例
-         * @param {string=} childName 子控件名
-         */
-        addChild: function ( control, childName ) {
-            childName = childName || control.childName;
-
-            // 若控件已存在父控件，先断开关系
-            if ( control.parent ) {
-                control.parent.removeChild( control );
-            }
-
-            // 加入子控件列表，并存储父控件引用
-            this.children.push( control );
-            control.parent = this;
-
-            // 如果指定了控件名
-            // 则给子控件存储此命名，且加入父控件的具名子控件索引
-            if ( childName ) {
-                control.childName = childName;
-                this.childrenIndex[ childName ] = control;
-            }
-        },
-
-        /**
-         * 移除子控件
-         *
-         * @public
-         * @param {Control} control 子控件实例
-         */
-        removeChild: function ( control ) {
-            // 从子控件树列表中移除
-            var children = this.children;
-            var size = children.length;
-            while ( size-- ) {
-                if ( children[ size ] === control ) {
-                    children.splice( size, 1);
-                    // 上面移除了一项，这里修正下下个索引
-                    // 正常情况下，子控件不可能重复添加
-                    // 这里的优化其实不一定有太大作用
-                    // 看情况是否保留 或者 直接 `break`
-                    size--;
-                }
-            }
-
-            // 从具名子控件索引中移除
-            var childName = control.childName;
-            if ( childName ) {
-                this.childrenIndex[ childName ] = null;
-            }
-
-            // 断开与父控件的关系
-            control.parent = null;
-        },
-
-
         /**
          * 添加控件状态
          *
@@ -767,16 +691,6 @@ define(function ( require ) {
     // 混入 `Emitter` 支持
     Emitter.mixin( Control.prototype );
 
-
-    
-    /**
-     * Control原型的emit方法引用
-     * 其是`Emitter`的`emit`方法`mixin`复制而来
-     * 
-     * @inner
-     * @type {Function}
-     */
-    var orignEmit = Control.prototype.emit;
     
     /**
      * 触发自定义事件
@@ -811,10 +725,10 @@ define(function ( require ) {
             handler.apply( this, args );
         }
 
-        // 然后调用 `Emitter`.`emit` 方法
+        // 最终回到 `Emitter` 的 `emit` 方法
         // 使用调整后的新参数序列:
         // `type`, `ev`, `args`...
-        orignEmit.apply( this, [ type ].concat( args ) );
+        Control.prototype.emit.apply( this, [ type ].concat( args ) );
     };
 
 
