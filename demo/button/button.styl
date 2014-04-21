@@ -1,0 +1,62 @@
+$ui_button_bg := #f6f6f6
+
+// 无图标线性渐变背景
+// direction 渐变方向
+// from-color 起始颜色
+// to-color 终止颜色
+// bg-color 背景色
+linear-gradient-background(
+    direction = top,
+    from-color,
+    to-color,
+    bg-color = transparent
+)
+    // 内部变量
+    top = 0% 0%, 0% 100%
+    left = 0% 0%, 100% 0%
+    bottom = 0% 100%, 0% 0%
+    right = 100% 0%, 0% 0%
+
+    background: bg-color
+
+    // Safari 4-5, Chrome 1-9
+    background: -webkit-gradient(
+        linear,
+        direction,
+        from(from-color),
+        to(to-color)
+    )
+  
+    // Safari 5.1, Chrome 10+
+    background: -webkit-linear-gradient(direction, from-color, to-color);
+
+
+
+.state-hidden
+    display: none !important;
+
+.ui-button-disabled
+    background: $ui_button_bg;
+    border-color: #cfcfcf;
+    color: #999;
+
+.ui-button
+    display: inline-block
+    box-sizing: content-box
+
+    user-select: none
+    overflow: hidden
+
+    vertical-align: middle
+    padding: rem(5px) rem(10px)
+
+    border: rem(1px) solid #CCC
+    border-radius: rem(2px)
+    linear-gradient-background: top, #ffffff, $ui_button_bg, #ffffff
+
+    &:active
+        border: rem(1px) solid #BEBEBE
+        linear-gradient-background: top, $ui_button_bg, #ffffff, $ui_button_bg
+
+    &:disabled
+        @extend .ui-button-disabled

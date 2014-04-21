@@ -12,6 +12,7 @@ define(function ( require ) {
     var dom = require( 'saber-dom' );
     var Emitter = require( 'saber-emitter' );
     var Helper = require( './Helper' );
+    var lib = require( './lib' );
     var ui = require( './main' );
 
 
@@ -47,11 +48,11 @@ define(function ( require ) {
      * @param {*=} options.* 其余初始化参数由各控件自身决定
      */
     var Control = function ( options ) {
-        if ( this.initialized ) return;
+        if ( this.initialized ) {
+            return;
+        }
 
         this.helper = new Helper( this );
-        this.childrenIndex = {};
-        this.children = [];
         this.states = {};
 
         options = options || {};
@@ -67,7 +68,7 @@ define(function ( require ) {
         this.emit( 'beforeinit' );
 
         if ( !this.id && !options.id ) {
-            this.id = this.helper.getGUID();
+            this.id = lib.getGUID();
         }
 
         this.main = options.main ? options.main : this.createMain();
@@ -584,23 +585,26 @@ define(function ( require ) {
                 }
             });
 
-            var changes = {}, hasChanged, oldValue, newValue;
+            var changes = {};
+            var hasChanged;
             for ( var key in properties ) {
-                if ( properties.hasOwnProperty( key ) ) {
-                    oldValue = this[ key ];
-                    newValue = properties[ key ];
-                    
-                    if ( oldValue !== newValue ) {
-                        this[ key ] = newValue;
+                if ( !properties.hasOwnProperty( key ) ) {
+                    continue;
+                }
 
-                        changes[ key ] = {
-                            name: key,
-                            oldValue: oldValue,
-                            newValue: newValue
-                        };
+                var oldValue = this[ key ];
+                var newValue = properties[ key ];
+                
+                if ( oldValue !== newValue ) {
+                    this[ key ] = newValue;
 
-                        hasChanged = true;
-                    }
+                    changes[ key ] = {
+                        name: key,
+                        oldValue: oldValue,
+                        newValue: newValue
+                    };
+
+                    hasChanged = true;
                 }
             }
 
@@ -629,7 +633,10 @@ define(function ( require ) {
          * @param {string} state 状态名
          */
         addState: function ( state ) {
-            if ( this.hasState( state ) ) return;
+            if ( this.hasState( state ) ) {
+                return;
+            }
+
             this.states[ state ] = 1;
 
             if ( state === 'disabled' ) {
@@ -728,7 +735,7 @@ define(function ( require ) {
         // 最终回到 `Emitter` 的 `emit` 方法
         // 使用调整后的新参数序列:
         // `type`, `ev`, `args`...
-        Control.prototype.emit.apply( this, [ type ].concat( args ) );
+        Emitter.prototype.emit.apply( this, [ type ].concat( args ) );
     };
 
 

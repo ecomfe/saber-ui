@@ -15,7 +15,6 @@ define(function ( require ) {
      * 提供UI全局配置、注册、管理、插件、解析、构建等
      *
      * @exports ui
-     * @class
      * @singleton
      * @requires saber-lang/extend
      */

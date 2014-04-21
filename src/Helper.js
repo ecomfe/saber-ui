@@ -8,9 +8,14 @@
 
 define( function ( require ) {
 
+    var extend = require( 'saber-lang/extend' );
+
+
     /**
      * 控件辅助类
      *
+     * @exports Helper
+     * @class
      * @constructor
      * @param {Control} control 关联的控件实例
      */
@@ -18,12 +23,12 @@ define( function ( require ) {
         this.control = control;
     };
 
-    Helper.prototype = {
-
-        constructor: Helper
-
-        // TODO: mixin event/dom/life/template
-    };
+    extend(
+        Helper.prototype,
+        require( './helper/dom' ),
+        require( './helper/event' ),
+        require( './helper/life' )
+    );
 
     return Helper;
 
