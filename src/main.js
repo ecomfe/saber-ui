@@ -249,11 +249,13 @@ define(function ( require ) {
      */
     main.disposePlugin = function ( control, pluginName ) {
         var activedPlugins = control.plugins;
-        var names;
 
         if ( !activedPlugins ) {
             return;
         }
+
+
+        var names;
 
         if ( Array.isArray( pluginName ) ) {
             names = pluginName;

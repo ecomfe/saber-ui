@@ -17,16 +17,40 @@ define( function ( require ) {
 
      /**
      * 销毁控件
-     * 
+     *
      * @public
-     * @param {Control} control 控件实例
      */
-    exports.dispose = function ( control ) {
-        // 清理DOM事件绑定
-        this.clearDOMEvents( control );
+    exports.dispose = function () {
+        var control = this.control;
 
-        // 删除实例存储
+        /**
+         * @event Control#beforedispose
+         * @param {Object} ev 事件参数对象
+         * @param {string} ev.type 事件类型
+         * @param {Control} ev.target 触发事件的控件对象
+         */
+        control.emit( 'beforedispose' );
+
+        // 清理DOM事件
+        this.clearDOMEvents();
+
+        // 清理实例存储
         ui.remove( control );
+
+        // 清理插件
+        ui.disposePlugin( control );
+
+
+        /**
+         * @event Control#afterdispose
+         * @param {Object} ev 事件参数对象
+         * @param {string} ev.type 事件类型
+         * @param {Control} ev.target 触发事件的控件对象
+         */
+        control.emit( 'afterdispose' );
+
+        // 清理自定义事件
+        control.off();
     };
 
 

@@ -41,12 +41,13 @@ define( function ( require ) {
      * 为控件管理的DOM元素添加DOM事件
      *
      * @public
-     * @param {Control} control 控件实例
      * @param {HTMLElement} element 需要添加事件的DOM元素
      * @param {string} type 事件的类型
      * @param {function} handler 事件处理函数
      */
-    exports.addDOMEvent = function ( control, element, type, handler ) {
+    exports.addDOMEvent = function ( element, type, handler ) {
+        var control = this.control;
+
         if ( !control.domEvents ) {
             control.domEvents = {};
         }
@@ -78,13 +79,14 @@ define( function ( require ) {
      * 为控件管理的DOM元素移除DOM事件
      *
      * @public
-     * @param {Control} control 控件实例
      * @param {HTMLElement} element 需要删除事件的DOM元素
      * @param {string} type 事件的类型
      * @param {Function=} handler 事件处理函数
      * 如果没有此参数则移除该控件管理的元素的所有`type`DOM事件
      */
-    exports.removeDOMEvent = function ( control, element, type, handler ) {
+    exports.removeDOMEvent = function ( element, type, handler ) {
+        var control = this.control;
+
         if ( !control.domEvents ) {
             return;
         }
@@ -97,7 +99,6 @@ define( function ( require ) {
 
         events[ type ].forEach(
             function ( fn ) {
-                // 
                 if ( !handler || fn === handler ) {
                     element.removeEventListener( type, fn, false );    
                 }
@@ -111,11 +112,12 @@ define( function ( require ) {
      * 清除控件管理的DOM元素上的事件
      *
      * @public
-     * @param {Control} control 控件实例
      * @param {HTMLElement=} element 控件管理的DOM元素
      * 如果没有此参数则去除所有该控件管理的元素的DOM事件
      */
-    exports.clearDOMEvents = function ( control, element ) {
+    exports.clearDOMEvents = function ( element ) {
+        var control = this.control;
+
         if ( !control.domEvents ) {
             return;
         }
@@ -126,7 +128,7 @@ define( function ( require ) {
             for ( guid in control.domEvents ) {
                 if ( control.domEvents.hasOwnProperty( guid ) ) {
                     events = control.domEvents[ guid ];
-                    exports.clearDOMEvents( control, events.element );
+                    exports.clearDOMEvents( events.element );
                 }
             }
             return;
@@ -141,7 +143,7 @@ define( function ( require ) {
         delete events.element;
         for ( var type in events ) {
             if ( events.hasOwnProperty( type ) ) {
-                exports.removeDOMEvent( control, element, type );
+                exports.removeDOMEvent( element, type );
             }
         }
         delete control.domEvents[ guid ];

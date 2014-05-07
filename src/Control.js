@@ -29,9 +29,7 @@ define(function ( require ) {
      * @requires saber-emitter
      * @requires Helper
      * @requires ui
-     * @fires Control#beforeinit
      * @fires Control#init
-     * @fires Control#afterinit
      * @fires Control#beforerender
      * @fires Control#afterrender
      * @fires Control#beforedispose
@@ -49,36 +47,53 @@ define(function ( require ) {
      */
     var Control = function ( options ) {
         if ( this.initialized ) {
-            return;
+            return this;
         }
-
-        this.helper = new Helper( this );
-        this.states = {};
 
         options = options || {};
 
-        this.initOptions( options );
+        // 控件状态集
+        this.states = {};
 
         /**
-         * @event Control#beforeinit
-         * @param {Object} ev 事件参数对象
-         * @param {string} ev.type 事件类型
-         * @param {Control} ev.target 触发事件的控件对象
+         * 控件关联的`Helper`对象
+         *
+         * @type {Helper}
+         * @protected
          */
-        this.emit( 'beforeinit' );
+        this.helper = new Helper( this );
 
+        /**
+         * 控件主元素
+         *
+         * @type {HTMLElement}
+         * @readonly
+         */
+        this.main = options.main ? options.main : this.createMain();
+
+        /**
+         * 控件的`id`
+         *
+         * @type {string}
+         * @readonly
+         */
         if ( !this.id && !options.id ) {
             this.id = lib.getGUID();
         }
 
-        this.main = options.main ? options.main : this.createMain();
+        // 初始化相关配置
+        this.initOptions( options );
 
         // 存储实例
         ui.add( this );
 
-        if ( isFunction( this.init ) ) {
-            this.init( options );
-        }
+        /**
+         * 控件初始化标志位
+         *
+         * @type {boolean}
+         * @private
+         */
+        this.initialized = true;
 
         /**
          * @event Control#init
@@ -87,16 +102,6 @@ define(function ( require ) {
          * @param {Control} ev.target 触发事件的控件对象
          */
         this.emit( 'init' );
-
-        /**
-         * @event Control#afterinit
-         * @param {Object} ev 事件参数对象
-         * @param {string} ev.type 事件类型
-         * @param {Control} ev.target 触发事件的控件对象
-         */
-        this.emit( 'afterinit' );
-
-        this.initialized = true;
     };
 
     Control.prototype = {
@@ -116,6 +121,7 @@ define(function ( require ) {
          * 控件可用状态
          *
          * @type {boolean}
+         * @protected
          */
         disabled: false,
 
@@ -123,6 +129,7 @@ define(function ( require ) {
          * 控件可见状态
          *
          * @type {boolean}
+         * @protected
          */
         hidden: false,
 
@@ -177,33 +184,28 @@ define(function ( require ) {
         },
 
         /**
-         * 控件初始化
+         * 初始化DOM结构，仅在第一次渲染时调用
          *
          * @protected
-         * @param {Object} options 构造函数传入的选项
-         * @param {string=} options.id 控件标识
-         * @param {HTMLElement=} options.main 控件主元素
-         * @param {string=} options.skin 控件皮肤
-         * @param {*=} options.* 其余初始化参数由各控件自身决定
          */
-        init: function ( options ) {},
+        initStructure: function () {},
+
+        /**
+         * 初始化DOM相关事件，仅在第一次渲染时调用
+         *
+         * @protected
+         */
+        initEvents: function () {},
 
         /**
          * 创建控件主元素
-         * 
+         *
          * @protected
          * @return {HTMLElement}
          */
         createMain: function () {
             return document.createElement('div');
         },
-
-        /**
-         * 初始化DOM结构，仅在第一次渲染时调用
-         * 
-         * @protected
-         */
-        initStructure: function () {},
 
         /**
          * 渲染控件
@@ -216,6 +218,12 @@ define(function ( require ) {
             var rendered = this.rendered;
 
             if ( !rendered ) {
+                /**
+                 * 控件已渲染标志位
+                 *
+                 * @type {boolean}
+                 * @private
+                 */
                 this.rendered = true;
 
                 /**
@@ -226,8 +234,10 @@ define(function ( require ) {
                  */
                 this.emit( 'beforerender' );
 
-                // DOM相关初始化
+                // DOM以及相关事件初始化
                 this.initStructure();
+                this.initEvents();
+
 
                 // 确保控件主元素插入到DOM树中
                 // 这里根据`this.options.main`分2种情况:
@@ -244,16 +254,16 @@ define(function ( require ) {
                     document.body.appendChild( this.main );
                 }
 
-                // 为控件主元素添加id属性
+                // 为控件主元素补充`id`属性
                 if ( !this.main.id ) {
-                    this.main.id = this.helper.getId( this );
+                    this.main.id = this.helper.getId();
                 }
 
                 // 为控件主元素添加控件实例标识属性
                 this.main.setAttribute( ui.getConfig( 'instanceAttr' ), this.id );
 
                 // 为控件主元素添加控件相关的class
-                this.helper.addPartClasses( this );
+                this.helper.addPartClasses();
             }
 
             // 由子类根据需要覆盖扩展
@@ -276,6 +286,10 @@ define(function ( require ) {
          *
          * @protected
          * @param {Object=} changes 变更过的属性的集合
+         * 每个**属性变更对象**包含以下属性
+         * - `name`：属性名
+         * - `oldValue`：变更前的值
+         * - `newValue`：变更后的值
          */
         repaint: function ( changes ) {
             var method;
@@ -299,36 +313,10 @@ define(function ( require ) {
          * @fires Control#afterdispose
          */
         dispose: function () {
-            if ( this.disposed ) {
-                return;
+            if ( !this.disposed ) {
+                this.helper.dispose();
+                this.disposed = true;
             }
-
-            /**
-             * @event Control#beforedispose
-             * @param {Object} ev 事件参数对象
-             * @param {string} ev.type 事件类型
-             * @param {Control} ev.target 触发事件的控件对象
-             */
-            this.emit( 'beforedispose' );
-
-            this.helper.dispose( this );
-
-            /**
-             * @event Control#afterdispose
-             * @param {Object} ev 事件参数对象
-             * @param {string} ev.type 事件类型
-             * @param {Control} ev.target 触发事件的控件对象
-             */
-            this.emit( 'afterdispose' );
-
-            // 清理绑定的插件
-            ui.disposePlugin( this );
-
-            // 清理自定义事件和监听器
-            this.off();
-
-            // 做标记
-            this.disposed = true;
         },
 
         /**
@@ -355,7 +343,6 @@ define(function ( require ) {
          * @param {HTMLElement} wrap 控件要添加到的目标元素
          */
         appendTo: function ( wrap ) {
-            // this.main = wrap || this.main;
             wrap.appendChild( this.main );
             this.render();
         },
@@ -540,12 +527,13 @@ define(function ( require ) {
             var method = this[ 'set' + toPascalize( name ) ];
 
             if ( 'function' === typeof method ) {
-                return method.call( this, value );
+                method.call( this, value );
             }
-
-            var property = {};
-            property[ name ] = value;
-            this.setProperties( property );
+            else {
+                var property = {};
+                property[ name ] = value;
+                this.setProperties( property );
+            }
         },
 
         /**
@@ -639,11 +627,12 @@ define(function ( require ) {
 
             this.states[ state ] = 1;
 
+            // 当添加`禁用`状态时，主元素多处理一下
             if ( state === 'disabled' ) {
                 this.main.setAttribute( state, state );
             }
 
-            this.helper.addStateClasses( this, state );
+            this.helper.addStateClasses( state );
 
             var properties = {};
             properties[ state ] = true;
@@ -664,7 +653,7 @@ define(function ( require ) {
                 this.main.removeAttribute( state );
             }
 
-            this.helper.removeStateClasses( this, state );
+            this.helper.removeStateClasses( state );
 
             var properties = {};
             properties[ state ] = false;
@@ -767,18 +756,6 @@ define(function ( require ) {
     function isFunction( obj ) {
         return '[object Function]' === toString.call( obj );
     }
-
-    /**
-     * 判断是否为对象
-     * 
-     * @inner
-     * @param {*} obj 目标对象
-     * @return {boolean}
-     */
-    function isObject( obj ) {
-        return '[object Object]' === toString.call( obj );
-    }
-
 
 
 

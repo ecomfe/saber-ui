@@ -52,33 +52,46 @@ define(function ( require ) {
          */
         content: '',
 
-        init: function ( options ) {
-            var me = this;
+        /**
+         * 初始化控件选项
+         *
+         * @override
+         * @protected
+         * @param {Object} options 构造函数传入的选项
+         */
+        initOptions: function ( options ) {
+            var properties = lang.extend( {
+                content: this.content || this.main.innerHTML
+            }, options );
+
+            Control.prototype.initOptions.call( this, properties );
+        },
+
+        /**
+         * 初始化事件交互
+         *
+         * @protected
+         * @override
+         */
+        initEvents: function () {
+            var self = this;
 
             this.helper.addDOMEvent(
-                this,
                 this.main,
                 'click',
-                function ( event ) {
-                    if ( !me.isDisabled() && !me.isHidden() ) {
+                function ( e ) {
+                    if ( !self.isDisabled() && !self.isHidden() ) {
                         /**
                          * @event Button#click
                          * @param {Object} ev 事件参数对象
                          * @param {string} ev.type 事件类型
                          * @param {Control} ev.target 触发事件的控件对象
-                         * @param {Object} event MouseEvent对象
+                         * @param {Object} e MouseEvent对象
                          */
-                        me.emit( 'click', event );
+                        self.emit( 'click', e );
                     }
                 }
             );
-
-
-            var properties = lang.extend( {
-                content: this.content || this.main.innerHTML
-            }, options );
-
-            this.setProperties( properties );
         },
 
         /**
@@ -129,7 +142,8 @@ define(function ( require ) {
          * @param {string} content 要设置的按钮内容
          */
         setContent: function ( content ) {
-            this.setProperties( { 'content': content } );
+            // 这里不能用 `this.set`, 会产生死循环的...
+            this.setProperties( { content: content } );
         }
 
     };
