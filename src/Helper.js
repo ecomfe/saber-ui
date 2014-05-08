@@ -27,7 +27,8 @@ define( function ( require ) {
         Helper.prototype,
         require( './helper/dom' ),
         require( './helper/event' ),
-        require( './helper/life' )
+        require( './helper/life' ),
+        require( './helper/template' )
     );
 
     return Helper;

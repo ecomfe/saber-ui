@@ -204,7 +204,7 @@ define(function ( require ) {
          * @return {HTMLElement}
          */
         createMain: function () {
-            return document.createElement('div');
+            return document.createElement( 'div' );
         },
 
         /**
@@ -234,8 +234,10 @@ define(function ( require ) {
                  */
                 this.emit( 'beforerender' );
 
-                // DOM以及相关事件初始化
+                // DOM初始化
                 this.initStructure();
+
+                // 事件初始化
                 this.initEvents();
 
 
@@ -266,7 +268,7 @@ define(function ( require ) {
                 this.helper.addPartClasses();
             }
 
-            // 由子类根据需要覆盖扩展
+            // 子类自行覆盖扩展
             this.repaint();
 
             if ( !rendered ) {
@@ -558,20 +560,6 @@ define(function ( require ) {
             delete properties.id;
             delete properties.skin;
 
-
-            // 确保几个状态选项值为`boolean`类型
-            // `diabled`, `hidden`
-            [ 'disabled', 'hidden' ].forEach( function ( k ) {
-                if ( properties.hasOwnProperty( k ) ) {
-                    // 静态化构建时，所有属性值从DOM属性而来，均是字符串
-                    // 用正则，而没用`!!`，是因为：
-                    // 子控件万一需要设置属性默认值为`true`时
-                    // 如果静态话配置是`'false'`时，`!!'false'`就失效了为`true`
-                    // TODO：找到更好的方式后再替换
-                    // properties[ k ] = !!properties[ k ];
-                    properties[ k ] = /\s?true\s?/i.test( properties[ k ] );
-                }
-            });
 
             var changes = {};
             var hasChanged;

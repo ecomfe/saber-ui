@@ -15,7 +15,7 @@ define( function ( require ) {
      */
     var exports = {};
 
-     /**
+    /**
      * 销毁控件
      *
      * @public

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Tab - Saber UI Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="tab.css">
+    <link rel="stylesheet" href="demo.css">
+    <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-6-10/esl.js"></script> 
+    <script>
+    require.config({
+        'packages': [
+            {
+                'name': 'saber-dom',
+                'location': '../dep/saber-dom/0.4.0/src',
+                'main': 'main'
+            },
+            {
+                'name': 'saber-string',
+                'location': '../dep/saber-string/0.3.0/src',
+                'main': 'main'
+            },
+            {
+                'name': 'saber-lang',
+                'location': '../dep/saber-lang/0.3.1/src',
+                'main': 'main'
+            },
+            {
+                'name': 'saber-emitter',
+                'location': '../dep/saber-emitter/0.5.0/src',
+                'main': 'emitter'
+            },
+            {
+                'name': 'saber-scroll',
+                'location': '../dep/saber-scroll/0.1.2/src',
+                'main': 'main'
+            },
+            {
+                'name': 'saber-run',
+                'location': '../dep/saber-run/0.2.0/src',
+                'main': 'main'
+            },
+            {
+                'name': 'saber-promise',
+                'location': '../dep/saber-promise/0.1.2/src',
+                'main': 'promise'
+            },
+            {
+                'name': 'saber-tap',
+                'location': '../dep/saber-tap/0.1.2/src',
+                'main': 'tap'
+            },
+            {
+                'name': 'saber-ui',
+                'location': '../../src',
+                'main': 'main'
+            }
+        ]
+    });
+    </script>
+
+</head>
+
+<body>
+    <header>Tab</header>
+
+    <div class="container">
+        <h2>静态化构建</h2>
+        <div id="wrapper1" class="wrapper">
+            <div class="loading">初始化中...</div>
+            <div data-ui="type:Tab;activeIndex:2;">
+                <ul data-role="navigator">
+                    <li data-for="a">Tab1</li>
+                    <li>disabled</li>
+                    <li data-for="b">actived</li>
+                    <li data-for="c">Tab3</li>
+                </ul>
+                <div id="a" class="ui-tab-panel">我是Tab1</div>
+                <div id="b" class="ui-tab-panel">我是actived</div>
+                <div id="c" class="ui-tab-panel">我是Tab3</div>
+                <div class="ui-tab-panel" style="color:red">我是永远显示的哦</div>
+            </div>
+            <div id="tabConsole">
+                <button id="setTabBtn">更换tab内容</button>
+                <button id="addTabBtn">添加新tab</button>
+                <button id="removeTabBtn">删除新tab</button>
+                <button id="switchTabBtn">禁用tab</button>
+                <button id="toggleTabBtn">隐藏tab</button>
+                <button id="dirTabBtn">纵向tab</button>
+            </div>
+        </div>
+
+        <h2>动态化创建</h2>
+        <div id="wrapper2" class="wrapper">
+            <div id="panels">
+                <div id="d1" class="ui-tab-panel">我是Tab1</div>
+                <div id="d2" class="ui-tab-panel">我是Tab2<div id="innerTab"></div></div>
+                <div id="d3" class="ui-tab-panel">我是Tab3</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    require(
+        [
+            'saber-tap',
+            'saber-dom/selector',
+            'saber-ui',
+            'saber-ui/Tab'
+        ],
+        function( Tap, selector, ui, Tab ) {
+            var $ = selector.query;
+            var wrapper1 = $( '#wrapper1' );
+            var wrapper2 = $( '#wrapper2' );
+            var initSuccess = function () {
+                setTimeout(
+                    function () {
+                        $( '#wrapper1 .loading' ).style.display = 'none';
+                    },
+                    500
+                );
+            };
+
+            // 300ms 点击延迟修复
+            Tap.mixin( $( '.container' ) );
+
+
+            // 静态化
+            var tabs = ui.init( wrapper1, { success: initSuccess } );
+            tabs[ 0 ].beforeChange = function ( oldIndex, newIndex ) {
+                // console.info( 'from %s to %s', oldIndex, newIndex );
+                return newIndex !== 1;
+            };
+
+            $('#setTabBtn').onclick = function () {
+                var i = tabs[ 0 ].get( 'activeIndex' );
+                var d = [
+                    { title: '教育', panel: 'a' },
+                    { title: '我依旧不能点' },
+                    { title: '健康', panel: 'c' },
+                    { title: '二手车', panel: 'b' },
+                ];
+                tabs[ 0 ].setProperties( { tabs: d, activeIndex: i } );
+            };
+
+            var newTabData = { title: '新Tab' };
+            $('#addTabBtn').onclick = function () {
+                tabs[ 0 ].insert( newTabData, 2 );
+            };
+            $('#removeTabBtn').onclick = function () {
+                tabs[ 0 ].remove( newTabData );
+            };
+            $('#switchTabBtn').onclick = function () {
+                var isDisabeld = tabs[ 0 ].isDisabled();
+                tabs[ 0 ].setDisabled( !isDisabeld );
+                this.innerHTML = isDisabeld ? '禁用tab' : '启用tab';
+            };
+            $('#toggleTabBtn').onclick = function () {
+                var isHidden = tabs[ 0 ].isHidden();
+                tabs[ 0 ].toggle();
+                this.innerHTML = isHidden ? '隐藏tab' : '显示tab';
+            };
+            $('#dirTabBtn').onclick = function () {
+                var isVertical = tabs[ 0 ].get( 'orientation' ) === 'vertical';
+                tabs[ 0 ].set(
+                    'orientation', isVertical ? 'horizontal' : 'vertical' );
+                this.innerHTML = isVertical ? '纵向tab' : '横向tab';
+            };
+
+
+
+            // 动态化
+            var tabItems = [
+                { title: 'Tab1', panel: 'd1' },
+                { title: 'Tab2', panel: 'd2' },
+                { title: 'Tab3', panel: 'd3' }
+            ];
+            var t1 = new Tab({
+                // orientation: 'vertical',
+                tabs: tabItems
+            });
+            t1.on( 'change', function ( ev, data ) {
+                // console.info( 'change to %s: %o', data.index, data.tab );
+                if ( data.index === 1) {
+                    if ( !innerTab ) {
+                        innerTab = createInnerTab( $( '#innerTab' ) );
+                    }
+                }
+            });
+            t1.insertBefore( $('#panels') );
+
+
+
+            var innerTab;
+            function createInnerTab( wraper ) {
+                var panel = $('#dd');
+                if ( !panel ) {
+                    panel = document.createElement('div');
+                    panel.id = 'dd';
+                    panel.className = 'ui-tab-panel';
+                    wraper.appendChild( panel );
+                }
+
+                var items = [
+                    { title: '新闻' },
+                    { title: '教育' },
+                    { title: '健康' }
+                ];
+                var t = new Tab( { tabs: items, activeIndex: 1 } );
+                t.onchange = function ( ev, data ) {
+                    $('#dd').innerHTML = 'NO.'
+                        + data.index
+                        + ' : '
+                        + data.tab.title ;
+                };
+                t.insertBefore( panel );
+
+                return t;
+            }
+        }
+    );
+    </script>
+</body>
+</html>

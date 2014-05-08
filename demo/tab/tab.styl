@@ -1,0 +1,56 @@
+.state-hidden
+    display: none !important
+
+.ui-tab
+    user-select: none;
+
+.ui-tab-scroller
+    .ui-tab-navigator
+        display: table
+        table-layout: fixed
+    .ui-tab-item
+        display: table-cell
+
+
+.ui-tab-navigator
+    display: flex
+    margin: 0
+    padding: 0
+    white-space: nowrap
+    list-style: none
+    background: #2773dc
+    color: #fff
+
+    .ui-tab-item
+        // display: list-item
+        flex: 1
+        box-sizing: content-box
+
+        padding: rem(10px) rem(14px)
+
+        cursor: pointer
+        text-align: center;
+        // white-space: nowrap
+        ellipsis()
+
+    .ui-tab-item-active
+        cursor: default
+        background: #0c4da8
+
+// 横向
+// .ui-tab-horizontal
+//     .ui-tab-navigator
+//     .ui-tab-item
+
+// 纵向
+.ui-tab-vertical
+    height: 100%
+    .ui-tab-navigator, .ui-tab-item
+        display: block
+
+// 禁用
+.ui-tab-disabled
+    .ui-tab-navigator
+        opacity: .3;
+    .ui-tab-item
+        cursor: default;

@@ -356,6 +356,8 @@ define(function ( require ) {
             // 但是会遇上`key:`这样的串，即只有键没有值，
             // 这时我们就认为值是个空字符串了
             var value = source.slice( lastStop, cursor ).trim();
+            // 布尔值参数修复
+            value = 'true' === value ? true : ( 'false' === value ? false : value );
             // 加入到结果中
             result[ key ] = valueReplacer ? valueReplacer( value ) : value;
             // 再往前进一格，开始下一次查找

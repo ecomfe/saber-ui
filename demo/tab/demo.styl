@@ -1,0 +1,151 @@
+initialize()
+
+
+html
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+
+header
+    background: #252525
+    color: #fff
+    margin-bottom: rem(10px)
+    padding: rem(8px)
+    font-size: rem(22px)
+
+.container
+    padding: rem(10px)
+
+.wrapper
+    relative()
+    // display: flex
+    // align-items: flex-start
+    box-shadow: rem(2px) rem(2px) rem(5px) #DDD
+    margin: rem(10px)
+    padding: rem(5px)
+    min-height: rem(200px)
+
+.loading
+    display: box
+    box-orient: horizontal
+    box-pack: center
+    box-align: center
+
+    absolute: left, top
+    z-index: 99
+    
+    size(100%)
+    
+    background-color: rgba(0, 0, 0, 0.6)
+    color: #fff
+    font-size: 150%
+    font-weight: bold
+
+
+
+
+
+
+
+.container
+    //
+    .ui-tab-navigator
+        font-weight: bold
+
+    .ui-tab-panel
+        box-sizing: content-box
+        padding: rem(6px)
+
+    .ui-button
+        font-size: rem(16px)
+        padding: rem(5px) rem(10px)
+
+
+
+
+
+/* basic.html */
+#wrapper1
+    //
+    .ui-tab
+        border: rem(1px) solid #d4d4d4
+        clearfix()
+
+    .ui-tab-navigator
+        background-color: #f4f4f4
+        color: #4a4a4a
+
+    .ui-tab-item
+        border: solid #d4d4d4
+        border-width: 0 0 rem(1px) rem(1px)
+        &:first-child
+            border-width: 0 0 rem(1px) 0
+
+    .ui-tab-item-active
+        background-color: #fff
+        border-width: 0 0 0 rem(1px)
+        &:first-child
+            border-width: 0
+
+    .ui-tab-vertical
+        //
+        .ui-tab-navigator,
+        .ui-tab-panel        
+            float: left
+
+        .ui-tab-item
+            border-width: rem(1px) 0 0 0
+            &:first-child
+                border-width: 0
+
+#wrapper2
+    //
+    .ui-tab-vertical
+        float: left
+
+
+#tabConsole
+    margin: rem(10px) 0
+
+#innerTab
+    width: rem(250px)
+    border: rem(1px) solid #d4d4d4
+
+
+
+
+
+
+/* menu.html */
+#wrapper3 .ui-tab,
+#wrapper4 .ui-tab
+    background: #2773dc;
+
+.dropmenu
+    display: flex
+    absolute: left 50%, top rem(25px)
+    z-index: 9
+    size(70%, 70%)
+    overflow: hidden
+    box-shadow: rem(3px) rem(3px) rem(6px) #ddd
+    background-color: #fff
+
+    .menu, .panel
+        flex: 1
+        height: 100%
+        vertical-align: top
+        word-break: break-all
+
+    .menu
+        min-width: rem(90px)
+
+    .panel
+        relative()
+        flex: 2
+        width: 100%
+
+    .ui-tab
+        background: #2773dc
+
+
+.dropmenu-hidden
+    display: none
+    
