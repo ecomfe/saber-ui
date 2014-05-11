@@ -1,26 +1,29 @@
 {
-    "name": "saber-ui",
-    "version": "0.2.0",
-    "description": "适合移动端的UI组件库",
-    "main": "main",
-    "maintainers": [
-        { "name": "zfkun", "email": "zfkun@msn.com" }
-    ],
-    "scripts": {
-        "test": "./node_modules/.bin/phantomjs test/run-jasmine.js test/runner.html"
-    },
-    "dependencies": {
-        "saber-dom": "~0.4.0",
-        "saber-string": "~0.3.0",
-        "saber-lang": "~0.3.1",
-        "saber-emitter": "~0.5.0",
-        "saber-scroll": "~0.1.2",
-        "saber-tap": "~0.1.2"
-    }
-    "devDependencies": {
-        "phantomjs": "~1.9"
-    },
-    "license": "BSD",
-    "repository": "git://github.com/ecomfe/saber-ui.git",
-    "bugs": "https://github.com/ecomfe/saber-ui/issues"
+  "name": "saber-ui",
+  "version": "0.2.0",
+  "description": "适合移动端的UI组件库",
+  "main": "main",
+  "maintainers": [
+    { "name": "zfkun", "email": "zfkun@msn.com" }
+  ],
+  "scripts": {
+    "test": "./node_modules/.bin/phantomjs test/run-jasmine.js test/runner.html"
+  },
+  "dependencies": {
+    "saber-dom": "~0.4.0",
+    "saber-string": "~0.3.0",
+    "saber-lang": "~0.3.1",
+    "saber-emitter": "~0.5.0",
+    "saber-scroll": "~0.1.2",
+    "saber-tap": "~0.1.2"
+  },
+  "devDependencies": {
+    "phantomjs": "~1.9",
+    "edp-provider-rider": "~0.3.3",
+    "rider-ui": "~0.1.1",
+    "rin": "~0.0.4"
+  },
+  "license": "BSD",
+  "repository": "git://github.com/ecomfe/saber-ui.git",
+  "bugs": "https://github.com/ecomfe/saber-ui/issues"
 }

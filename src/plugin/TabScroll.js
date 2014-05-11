@@ -25,6 +25,12 @@ define(function ( require ) {
      * 此参数不做加工过滤，直接传给`saber-scroll`构造函数
      */
     var Scroll = function( tab ) {
+        /**
+         * 选项卡控件实例
+         *
+         * @public
+         * @type {Tab}
+         */
         this.target = tab;
         this.initOptions.apply( this, [].slice.call( arguments, 1 ) );
     };
@@ -38,14 +44,6 @@ define(function ( require ) {
          * @type {string}
          */
         type: 'TabScroll',
-
-        /**
-         * 选项卡控件实例
-         *
-         * @public
-         * @type {Tab=}
-         */
-        target: null,
 
         /**
          * 插件初始化

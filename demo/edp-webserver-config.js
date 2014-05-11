@@ -1,7 +1,12 @@
 var epr = require( 'edp-provider-rider' );
+var riderUI = require( 'rider-ui' );
+
 exports.stylus = epr.stylus;
 
-var stylusPlugin = epr.plugin();
+function stylusConfig( style ) {
+    style.use( epr.plugin() );
+    style.use( riderUI() );
+}
 
 exports.port = 8848;
 exports.directoryIndexes = true;
@@ -9,54 +14,13 @@ exports.documentRoot = __dirname + '/../';
 exports.getLocations = function () {
     return [
         { 
-            location: /\/$/, 
-            handler: home( 'index.html' )
-        },
-        { 
-            location: /^\/redirect-local/, 
-            handler: redirect('redirect-target', false) 
-        },
-        { 
-            location: /^\/redirect-remote/, 
-            handler: redirect('http://www.baidu.com', false) 
-        },
-        { 
-            location: /^\/redirect-target/, 
-            handler: content('redirectd!') 
-        },
-        { 
-            location: '/empty', 
-            handler: empty() 
-        },
-        { 
             location: /\.css($|\?)/, 
             handler: [
                 autocss({
                     stylus: {
-                        stylus: epr.stylus,
-                        use: stylusPlugin
+                        use: stylusConfig
                     }
                 })
-            ]
-        },
-        { 
-            location: /\.less($|\?)/, 
-            handler: [
-                file(),
-                less()
-            ]
-        },
-        { 
-            location: /\.styl($|\?)/, 
-            handler: [
-                file(),
-                stylus()
-            ]
-        },
-        {
-            location: /\.tpl\.js($|\?)/,
-            handler: [
-                html2js()
             ]
         },
         { 
