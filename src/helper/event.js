@@ -8,6 +8,7 @@
 
 define( function ( require ) {
 
+    var lang = require( 'saber-lang' );
     var lib = require( '../lib' );
 
     /**
@@ -18,11 +19,12 @@ define( function ( require ) {
 
     /**
      * DOM事件存储器键值
-     * 紧为控件管理的DOM元素使用，存储在控件实例上
+     * 仅为控件管理的DOM元素使用，存储在控件实例上
      *
+     * @const
      * @type {string}
      */
-    var domEventsKey = '_uiDOMEvent';
+    var DOM_EVENTS_KEY = '_uiDOMEvent';
 
     /**
      * 检查元素是否属于全局事件范围的目标元素
@@ -35,6 +37,19 @@ define( function ( require ) {
             || element === document
             || element === document.documentElement
             || element === document.body;
+    }
+
+
+    function triggerDOMEvent ( control, element, ev ) {
+        var queue = control.domEvents[ ev.currentTarget[ DOM_EVENTS_KEY ] ][ ev.type ];
+        if ( queue ) {
+            queue.forEach(
+                function ( fn ) {
+                    fn.call( this, ev );
+                },
+                control
+            );
+        }
     }
 
     /**
@@ -52,27 +67,34 @@ define( function ( require ) {
             control.domEvents = {};
         }
 
-        var guid = element[ domEventsKey ];
+        var guid = element[ DOM_EVENTS_KEY ];
         if ( !guid ) {
-            guid = element[ domEventsKey ] = lib.getGUID();
+            guid = element[ DOM_EVENTS_KEY ] = lib.getGUID();
         }
 
         var events = control.domEvents[ guid ];
         if ( !events ) {
-            // `events`中的键都是事件的名称，仅`element`除外，
-            // 因为DOM上没有`element`这个事件，所以这里占用一下没关系
-            events = control.domEvents[ guid ] = { element: element };
+            // `events`中的键都是事件的名称，仅`node`除外，
+            // 因为DOM上没有`node`这个事件，所以这里占用一下没关系
+            events = control.domEvents[ guid ] = { node: element };
         }
 
         // var isGlobal = isGlobalEvent( element );
-        var listeners = events[ type ];
-        if ( !listeners ) {
-            listeners = events[ type ] = [];
+
+        var handlers = events[ type ];
+
+        // 同一个部件元素的同一个DOM事件
+        // 仅用一个处理函数处理,存放在队列的`handler`上
+        if ( !handlers ) {
+            handlers = events[ type ] = [];
+            handlers.handler = lang.bind( triggerDOMEvent, null, control, element );
+            element.addEventListener( type, handlers.handler, false );
         }
-
-        element.addEventListener( type, handler, false );
-
-        listeners.push( handler );
+        
+        // 过滤重复监听器
+        if ( handlers.indexOf( handler ) < 0 ) {
+            handlers.push( handler );
+        }
     };
 
     /**
@@ -85,27 +107,31 @@ define( function ( require ) {
      * 如果没有此参数则移除该控件管理的元素的所有`type`DOM事件
      */
     exports.removeDOMEvent = function ( element, type, handler ) {
-        var control = this.control;
-
-        if ( !control.domEvents ) {
+        var events = this.control.domEvents;
+        if ( !events ) {
             return;
         }
 
-        var events = control.domEvents[ element[ domEventsKey ] ];
-
+        events = events[ element[ DOM_EVENTS_KEY ] ];
         if ( !events || !events[ type ] ) {
             return;
         }
 
-        events[ type ].forEach(
-            function ( fn ) {
-                if ( !handler || fn === handler ) {
-                    element.removeEventListener( type, fn, false );    
-                }
-            }
-        );
+        // 图方便
+        events = events[ type ];
 
-        delete events[ type ];
+        if ( !handler ) {
+            events.length = 0;
+            element.removeEventListener( type, events.handler, false );
+        }
+        else {
+            var i = events.indexOf( handler );
+            if ( i >= 0 ) {
+                events.splice( i, 1 );
+            }
+        }
+
+        delete this.control.domEvents[ type ];
     };
 
     /**
@@ -116,37 +142,41 @@ define( function ( require ) {
      * 如果没有此参数则去除所有该控件管理的元素的DOM事件
      */
     exports.clearDOMEvents = function ( element ) {
-        var control = this.control;
-
-        if ( !control.domEvents ) {
+        var events = this.control.domEvents;
+        if ( !events ) {
             return;
         }
 
-        var guid, events;
+        var guid;
 
         if ( !element ) {
-            for ( guid in control.domEvents ) {
-                if ( control.domEvents.hasOwnProperty( guid ) ) {
-                    events = control.domEvents[ guid ];
-                    exports.clearDOMEvents( events.element );
+            for ( guid in events ) {
+                if ( events.hasOwnProperty( guid ) ) {
+                    this.clearDOMEvents( events[ guid ].node );
                 }
             }
+
+            this.control.domEvents = null;
+            
             return;
         }
 
-        guid = element[ domEventsKey ];
-        events = control.domEvents[ guid ];
+        guid = element[ DOM_EVENTS_KEY ];
+        events = events[ guid ];
 
-        // `events`中存放着各事件类型，只有`element`属性是一个DOM对象，
-        // 因此要删除`element`这个键，
-        // 以避免`for... in`的时候碰到一个不是数组类型的值
-        delete events.element;
+        // `events`是各种DOM事件的键值对容器
+        // 但包含存在一个键值为`node`的DOM对象，需要先移除掉
+        // 以避免影响后面的`for`循环处理
+        delete events.node;
+
+        // 清除已经注册的事件
         for ( var type in events ) {
             if ( events.hasOwnProperty( type ) ) {
-                exports.removeDOMEvent( element, type );
+                this.removeDOMEvent( element, type );
             }
         }
-        delete control.domEvents[ guid ];
+
+        delete this.control.domEvents[ guid ];
     };
 
     return exports;
