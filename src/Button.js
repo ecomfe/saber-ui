@@ -73,7 +73,7 @@ define(function ( require ) {
          * @protected
          * @override
          */
-        initEvents: function () {
+        initEvent: function () {
             var self = this;
 
             this.helper.addDOMEvent(

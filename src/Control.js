@@ -195,7 +195,7 @@ define(function ( require ) {
          *
          * @protected
          */
-        initEvents: function () {},
+        initEvent: function () {},
 
         /**
          * 创建控件主元素
@@ -238,7 +238,7 @@ define(function ( require ) {
                 this.initStructure();
 
                 // 事件初始化
-                this.initEvents();
+                this.initEvent();
 
 
                 // 确保控件主元素插入到DOM树中
