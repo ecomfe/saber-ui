@@ -34,6 +34,8 @@ define(function ( require ) {
      * @param {boolean=} options.animate 是否启用切换动画
      * @param {boolean=} options.loop 是否自动循环切换
      * @param {boolean=} options.loopDelay 自动循环切换间隔，单位毫秒
+     * @param {boolean=} options.dot 是否显示dot
+     * @param {boolean=} options.flex 是否自适应屏幕旋转
      * @param {boolean=} options.index 初始位置
      * @param {boolean=} options.speed 回弹动画时长，单位毫秒
      * @param {boolean=} options.moveAt 移动侦测阀值，单位像素
@@ -126,13 +128,6 @@ define(function ( require ) {
          * @type {string}
          */
         dotActiveCls: 'active',
-
-
-        // initOptions: function ( options ) {
-        //     var properties = lang.extend( {}, options );
-
-        //     Control.prototype.initOptions.call( this, properties );
-        // }
 
         initStructure: function () {
             var wrapper = dom.query( '[data-role=wrapper]', this.main );
