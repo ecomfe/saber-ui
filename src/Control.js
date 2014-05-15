@@ -209,7 +209,7 @@ define(function ( require ) {
 
         /**
          * 渲染控件
-         * 
+         *
          * @protected
          * @fires Control#beforerender
          * @fires Control#afterrender
@@ -245,12 +245,12 @@ define(function ( require ) {
                 // 这里根据`this.options.main`分2种情况:
                 // 1. 非空
                 //    a. `initialize`时传入了`main`
-                //    b. `appendTo`或`insertBefore`调用过 
+                //    b. `appendTo`或`insertBefore`调用过
                 // 2. 为空
                 //    则主元素是由`createMain`方法自动构建生成
-                // 
+                //
                 // 若 情况2 则再检查主元素是否的确不在DOM树中, 不是则插入
-                // 
+                //
                 // TODO: 这里直接通过`body.contains`验证, 想到更好的替换之
                 if ( !this.options.main && !document.body.contains( this.main ) ) {
                     document.body.appendChild( this.main );
@@ -570,7 +570,7 @@ define(function ( require ) {
 
                 var oldValue = this[ key ];
                 var newValue = properties[ key ];
-                
+
                 if ( oldValue !== newValue ) {
                     this[ key ] = newValue;
 
@@ -675,12 +675,12 @@ define(function ( require ) {
     // 混入 `Emitter` 支持
     Emitter.mixin( Control.prototype );
 
-    
+
     /**
      * 触发自定义事件
      * 注: 监听器方法调用时第一个参数为
      *    { `type`: 事件类型, `target`: 触发事件的控件对象 }
-     * 
+     *
      * @override
      * @param {string} type 事件名
      * @param {...*} * 传递给监听器的参数，可以有多个
@@ -699,7 +699,7 @@ define(function ( require ) {
     Control.prototype.emit = function ( type ) {
         // 构造事件参数对象
         var ev = { type: type, target: this };
-        
+
         // 构造新调用参数序列
         var args = [ ev ].concat( Array.prototype.slice.call( arguments, 1 ) );
 
@@ -725,7 +725,7 @@ define(function ( require ) {
 
     /**
      * 判断是否为字符串
-     * 
+     *
      * @inner
      * @param {*} obj 目标对象
      * @return {boolean}
@@ -736,7 +736,7 @@ define(function ( require ) {
 
     /**
      * 判断是否为函数
-     * 
+     *
      * @inner
      * @param {*} obj 目标对象
      * @return {boolean}
@@ -749,7 +749,7 @@ define(function ( require ) {
 
     /**
      * 将字符串转换成camel格式
-     * 
+     *
      * @inner
      * @param {string} source 源字符串
      * @return {string}
@@ -759,7 +759,7 @@ define(function ( require ) {
             return '';
         }
 
-        return source.replace( 
+        return source.replace(
             /-([a-z])/g,
             function ( alpha ) {
                 return alpha.toUpperCase();
@@ -769,7 +769,7 @@ define(function ( require ) {
 
     /**
      * 将字符串转换成pascal格式
-     * 
+     *
      * @inner
      * @param {string} source 源字符串
      * @return {string}

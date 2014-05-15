@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" href="slider.css">
     <link rel="stylesheet" href="demo.css">
-    <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-6-10/esl.js"></script> 
+    <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-6-10/esl.js"></script>
     <script>
     require.config({
         'packages': [
@@ -55,11 +55,17 @@
                 'main': 'tap'
             },
             {
+                'name': 'saber-matchmedia',
+                'location': '../dep/saber-matchmedia/0.1.0/src',
+                'main': 'main'
+            },
+            {
                 'name': 'saber-ui',
                 'location': '../../src',
                 'main': 'main'
             }
-        ]
+        ],
+        'paths': {}
     });
     </script>
 
@@ -73,8 +79,8 @@
     </nav>
 
     <div class="container">
-        <h2>普通</h2>
-        <div class="ui-slider" data-ui="" s-ui="type: Slider">
+        <h2>普通 (支持翻转)</h2>
+        <div class="ui-slider" data-ui="primary" s-ui="type: Slider; flex: true">
             <div>
                 <a href="http://www.baidu.com/"><img src="./img/1.png"></a>
                 <p>1,啊大哥神的gas大噶的撒个说</p>
@@ -94,7 +100,7 @@
         </div>
 
         <h2>无标题 (推荐)</h2>
-        <div class="ui-slider" data-ui="" s-ui="type: Slider; loopDelay: 3000">
+        <div class="ui-slider" s-ui="type: Slider; loopDelay: 3000">
             <div>
                 <a href="http://www.baidu.com/"><img src="./img/2.png"></a>
             </div>
@@ -110,7 +116,7 @@
         </div>
 
         <h2>自带dot</h2>
-        <div class="ui-slider" data-ui="" s-ui="type: Slider">
+        <div class="ui-slider" s-ui="type: Slider">
             <div data-role="wrapper">
                 <div>
                     <a href="http://www.baidu.com/"><img src="./img/3.png"></a>
@@ -134,7 +140,7 @@
         </div>
 
         <h2>处女座</h2>
-        <div class="ui-slider" data-ui="" s-ui="type: Slider; dot: false; width: 320">
+        <div class="ui-slider" s-ui="type: Slider; dot: false; width: 320">
             <img src="./img/4.png">
             <img src="./img/3.png">
             <img src="./img/2.png">
@@ -148,7 +154,8 @@
             'saber-tap',
             'saber-dom',
             'saber-ui',
-            'saber-ui/Slider'
+            'saber-ui/Slider',
+            'saber-ui/plugin/SliderFlex'
         ],
         function( Tap, dom, ui, Slider ) {
             ui.config( { uiPrefix: 's-ui' } );

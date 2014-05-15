@@ -1,7 +1,7 @@
 /**
  * Saber UI
  * Copyright 2014 Baidu Inc. All rights reserved.
- * 
+ *
  * @file 控件辅助类的DOM相关方法
  * @author zfkun(zfkun@msn.com)
  */
@@ -21,7 +21,7 @@ define( function ( require ) {
      *
      * @public
      * @param {string=} part 控件内部件名称
-     * @return {string} 
+     * @return {string}
      */
     exports.getId = function ( part ) {
         return ui.getConfig( 'idAttrPrefix' )

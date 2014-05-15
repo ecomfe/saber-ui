@@ -1,7 +1,7 @@
 /**
  * Saber UI
  * Copyright 2014 Baidu Inc. All rights reserved.
- * 
+ *
  * @file 基础工具库
  * @author zfkun(zfkun@msn.com)
  */
@@ -12,7 +12,7 @@ define( function ( require ) {
 
     /**
      * GUID生成基数
-     * 
+     *
      * @inner
      * @type {number}
      */

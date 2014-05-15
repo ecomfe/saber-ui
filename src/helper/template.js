@@ -1,7 +1,7 @@
 /**
  * Saber UI
  * Copyright 2014 Baidu Inc. All rights reserved.
- * 
+ *
  * @file 控件辅助类的模板相关方法
  * @author zfkun(zfkun@msn.com)
  */

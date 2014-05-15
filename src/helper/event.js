@@ -1,8 +1,8 @@
 /**
  * Saber UI
  * Copyright 2014 Baidu Inc. All rights reserved.
- * 
- * @file aaa
+ *
+ * @file 控件辅助类的DOM事件相关方法
  * @author zfkun(zfkun@msn.com)
  */
 
@@ -90,7 +90,7 @@ define( function ( require ) {
             handlers.handler = lang.bind( triggerDOMEvent, null, control, element );
             element.addEventListener( type, handlers.handler, false );
         }
-        
+
         // 过滤重复监听器
         if ( handlers.indexOf( handler ) < 0 ) {
             handlers.push( handler );
@@ -157,7 +157,7 @@ define( function ( require ) {
             }
 
             this.control.domEvents = null;
-            
+
             return;
         }
 

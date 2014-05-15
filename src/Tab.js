@@ -1,7 +1,7 @@
 /**
  * Saber UI
  * Copyright 2014 Baidu Inc. All rights reserved.
- * 
+ *
  * @file 选项卡控件
  * @author zfkun(zfkun@msn.com)
  */
@@ -16,7 +16,7 @@ define(function ( require ) {
 
     /**
      * 选项卡控件
-     * 
+     *
      * @constructor
      * @exports Tab
      * @class
@@ -87,7 +87,7 @@ define(function ( require ) {
 
         /**
          * 标签页的列表
-         * 
+         *
          * @private
          * @type {Array}
          * @default []
@@ -158,7 +158,7 @@ define(function ( require ) {
 
         /**
          * 初始化DOM结构，仅在第一次渲染时调用
-         * 
+         *
          * @override
          * @protected
          */
@@ -219,7 +219,7 @@ define(function ( require ) {
 
         /**
          * 创建控件主元素
-         * 
+         *
          * @override
          * @protected
          * @return {HTMLElement}
@@ -231,7 +231,7 @@ define(function ( require ) {
         /**
          * 重新渲染视图
          * 首次渲染时, 不传入 changes 参数
-         * 
+         *
          * @override
          * @param {Object=} changes 变更过的属性的集合
          */
@@ -276,7 +276,7 @@ define(function ( require ) {
 
         /**
          * 批量设置控件的属性值
-         * 
+         *
          * @override
          * @param {Object} properties 属性值集合
          */
@@ -354,7 +354,7 @@ define(function ( require ) {
         /**
          * 切换选项卡前校验
          * 主要给予使用者更多的灵活控制，默认返回true，不允许切换则需返回false
-         * 
+         *
          * @public
          * @param {number} oldIndex 原选中项索引值
          * @param {number} newIndex 新选中项索引值
@@ -366,7 +366,7 @@ define(function ( require ) {
 
         /**
          * 添加一个标签页
-         * 
+         *
          * @public
          * @param {Object} tabItem 标签页配置对象
          * @param {string} tabItem.title 标签页的标题
@@ -378,7 +378,7 @@ define(function ( require ) {
 
         /**
          * 在指定位置添加一个标签页
-         * 
+         *
          * @public
          * @param {Object} tabItem 标签页配置对象
          * @param {string} tabItem.title 标签页的标题
@@ -445,7 +445,7 @@ define(function ( require ) {
 
         /**
          * 移除一个标签页
-         * 
+         *
          * @public
          * @param {Object} tabItem 标签页配置对象
          */
@@ -467,7 +467,7 @@ define(function ( require ) {
 
         /**
          * 移除指定索引的标签页
-         * 
+         *
          * @public
          * @param {number} index 需要移除的标签页的索引
          * @fires Tab#remove
@@ -500,7 +500,7 @@ define(function ( require ) {
             else if ( index === this.activeIndex ) {
                 // 由于可能`activeIndex`没变，因此不能走`setProperties`流程
                 this.activeIndex = Math.min(
-                    this.activeIndex, 
+                    this.activeIndex,
                     this.tabs.length - 1
                 );
                 activateTab( this, this.activeIndex );
@@ -530,7 +530,7 @@ define(function ( require ) {
 
         /**
          * 选择激活标签
-         * 
+         *
          * @public
          * @param {number} index 需要激活的标签页索引
          */
@@ -546,7 +546,7 @@ define(function ( require ) {
 
         /**
          * 获取标签页内容的HTML
-         * 
+         *
          * @public
          * @param {Object} tabItem 标签页数据项
          * @return {string}
@@ -565,7 +565,7 @@ define(function ( require ) {
 
     /**
      * 点击某个标签时的切换逻辑
-     * 
+     *
      * @inner
      * @param {Event} event DOMEvent对象
      */
@@ -607,7 +607,7 @@ define(function ( require ) {
 
     /*
      * 激活指定位置的标签页
-     * 
+     *
      * @inner
      * @param {Tab} tab Tab控件实例
      * @parma {number} index 待激活的标签页的下标
@@ -646,7 +646,7 @@ define(function ( require ) {
      * 主要用于2处:
      * 1. 首次初始化构建时`initStructrue`
      * 2. `tabs`数据被外部修改(`set`,`setProperties`)重新赋值后的自动化重绘
-     * 
+     *
      * @inner
      * @param {Tab} tab 选项卡实例
      */
@@ -679,7 +679,7 @@ define(function ( require ) {
 
     /**
      * 创建一个标签元素
-     * 
+     *
      * @inner
      * @param {Tab} tab 控件实例
      * @param {Object} tabItem 标签页的配置

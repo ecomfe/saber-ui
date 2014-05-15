@@ -1,7 +1,7 @@
 /**
  * Saber UI
  * Copyright 2014 Baidu Inc. All rights reserved.
- * 
+ *
  * @file 按钮控件
  * @author zfkun(zfkun@msn.com)
  */
@@ -14,7 +14,7 @@ define(function ( require ) {
 
     /**
      * 按钮控件
-     * 
+     *
      * @constructor
      * @exports Button
      * @class
@@ -37,7 +37,7 @@ define(function ( require ) {
 
         /**
          * 控件类型标识
-         * 
+         *
          * @private
          * @type {string}
          */
@@ -45,7 +45,7 @@ define(function ( require ) {
 
         /**
          * 按钮显示文字
-         * 
+         *
          * @private
          * @type {string}
          * @default ''
@@ -96,7 +96,7 @@ define(function ( require ) {
 
         /**
          * 创建控件主元素
-         * 
+         *
          * @override
          * @return {HTMLElement}
          */
@@ -107,7 +107,7 @@ define(function ( require ) {
         /**
          * 重新渲染视图
          * 首次渲染时, 不传入 changes 参数
-         * 
+         *
          * @override
          * @param {Object=} changes 变更过的属性的集合
          */
@@ -137,7 +137,7 @@ define(function ( require ) {
 
         /**
          * 设置按钮内容
-         * 
+         *
          * @public
          * @param {string} content 要设置的按钮内容
          */

@@ -1,8 +1,8 @@
 /**
  * Saber UI
  * Copyright 2014 Baidu Inc. All rights reserved.
- * 
- * @file 控件辅助类的DOM相关方法
+ *
+ * @file 控件辅助类的生命周期相关方法
  * @author zfkun(zfkun@msn.com)
  */
 

@@ -1,7 +1,7 @@
 /**
  * Saber UI
  * Copyright 2014 Baidu Inc. All rights reserved.
- * 
+ *
  * @file 主模块
  * @author zfkun(zfkun@msn.com)
  */
@@ -228,7 +228,6 @@ define(function ( require ) {
 
     /**
      * 禁用插件
-     * 暂时不实现，视后续需要补充
      *
      * @public
      * @param {Control} control 目标控件实例
@@ -236,7 +235,29 @@ define(function ( require ) {
      * 单个禁用传入插件名, 批量禁用传入数组, 全部禁用不传入
      */
     main.inactivePlugin = function ( control, pluginName ) {
-        // TODO: 暂时不实现，视后续需要补充
+        var activedPlugins = control.plugins;
+
+        if ( !activedPlugins ) {
+            return;
+        }
+
+        var names;
+
+        if ( Array.isArray( pluginName ) ) {
+            names = pluginName;
+        }
+        else if ( !pluginName ) {
+            names = Object.keys( activedPlugins );
+        }
+        else if ( 'string' === typeof pluginName ) {
+            names = [ pluginName ];
+        }
+
+        names.forEach(function ( name ) {
+            if ( name && activedPlugins[ name ] ) {
+                activedPlugins[ name ].disable();
+            }
+        });
     };
 
     /**
@@ -294,9 +315,9 @@ define(function ( require ) {
         }
 
         // 为了让key和value中有`:`或`;`这类分隔符时能正常工作，不采用正则
-        // 
+        //
         // 分析的原则是：
-        // 
+        //
         // 1. 找到第1个冒号，取前面部分为key
         // 2. 找下个冒号前的最后一个分号，取前面部分为value
         // 3. 如果字符串没结束，回到第1步
@@ -415,7 +436,7 @@ define(function ( require ) {
 
         /**
          * 将字符串数组join成驼峰形式
-         * 
+         *
          * @inner
          * @param {Array.<string>} source 源字符串数组
          * @return {string}
@@ -434,7 +455,7 @@ define(function ( require ) {
 
         /**
          * 不覆盖目标对象成员的extend
-         * 
+         *
          * @inner
          * @param {Object} target 目标对象
          * @param {Object} source 源对象
@@ -449,7 +470,7 @@ define(function ( require ) {
 
         /**
          * 将标签解析的值附加到option对象上
-         * 
+         *
          * @inner
          * @param {Object} options option对象
          * @param {Array.<string>} terms 经过切分的标签名解析结果
@@ -470,7 +491,7 @@ define(function ( require ) {
 
         /**
          * 判断是否为 HTMLElement 元素节点
-         * 
+         *
          * @inner
          * @param {Object} node 待检测节点对象
          * @return {boolean}
@@ -481,7 +502,7 @@ define(function ( require ) {
 
         /**
          * HTMLElement节点解析函数
-         * 
+         *
          * @inner
          * @param {Element} node 待解析节点
          */
@@ -530,7 +551,7 @@ define(function ( require ) {
 
         /**
          * HTMLElement元素节点属性解析函数
-         * 
+         *
          * @inner
          * @param {Object} attribute 待解析元素节点属性对象
          */

@@ -7,10 +7,10 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    
+
     <link rel="stylesheet" href="button.css">
     <link rel="stylesheet" href="demo.css">
-    <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-6-10/esl.js"></script> 
+    <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-6-10/esl.js"></script>
     <script>
     require.config({
         'packages': [
@@ -55,11 +55,17 @@
                 'main': 'tap'
             },
             {
+                'name': 'saber-matchmedia',
+                'location': '../dep/saber-matchmedia/0.1.0/src',
+                'main': 'main'
+            },
+            {
                 'name': 'saber-ui',
                 'location': '../../src',
                 'main': 'main'
             }
-        ]
+        ],
+        'paths': {}
     });
     </script>
 
@@ -134,23 +140,23 @@
             var b1 = new Button();
             b1.appendTo( wrapper2 );
             b1.setContent( '完全默认' );
-            
+
             var b2 = new Button( { id: 'defaultBtn2', content: '指定id' } );
             b2.appendTo( wrapper2 );
-            
+
             var b3 = new Button( { content: '默认文字' } );
             b3.appendTo( wrapper2 );
-            
+
             var b4 = new Button({
                 content: '指定高宽(40/120)',
                 height: '40px',
                 width: '120px'
             });
             b4.appendTo( wrapper2 );
-            
+
             var b5 = new Button( { content: '<span>button > span</span>' } );
             b5.appendTo( wrapper2 );
-            
+
             var link1 = document.createElement('a');
             wrapper2.appendChild( link1 );
             var b6 = new Button({

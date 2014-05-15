@@ -7,11 +7,11 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    
+
     <link rel="stylesheet" href="../button/button.css">
     <link rel="stylesheet" href="tab.css">
     <link rel="stylesheet" href="demo.css">
-    <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-6-10/esl.js"></script> 
+    <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-6-10/esl.js"></script>
     <script>
     require.config({
         'packages': [
@@ -56,11 +56,17 @@
                 'main': 'tap'
             },
             {
+                'name': 'saber-matchmedia',
+                'location': '../dep/saber-matchmedia/0.1.0/src',
+                'main': 'main'
+            },
+            {
                 'name': 'saber-ui',
                 'location': '../../src',
                 'main': 'main'
             }
-        ]
+        ],
+        'paths': {}
     });
     </script>
 
@@ -73,7 +79,7 @@
         <h2>静态化构建</h2>
         <div id="wrapper3" class="wrapper">
             <div class="loading">初始化中...</div>
-            
+
             <h3>滚动导航</h3>
             <div data-ui="type:Tab;scroll:true;">
                 <ul data-role="navigator">
@@ -98,7 +104,7 @@
                     <li>大厦</li>
                 </ul>
             </div>
-            
+
             <h3>复合列表</h3>
             <div data-ui="type:Button;id:menu;">分类</div>
             <div class="dropmenu dropmenu-hidden">
@@ -189,7 +195,7 @@
 
             // 静态化
             ui.init( wrapper1, { success: initSuccess } );
-            
+
             var menu = ui.get( 'menu' );
             var tab = ui.get( 'list' );
             var panelScroll;
@@ -309,7 +315,7 @@
                     mypanelScroll = null;
                 });
                 mytab.appendTo( mydropmenu.querySelector( '.menu' ) );
-                
+
                 mytab.get( 'plugins' )[ 'TabScroll' ].repaint();
             }
 

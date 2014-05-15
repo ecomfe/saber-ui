@@ -1,7 +1,7 @@
 /**
  * Saber UI
  * Copyright 2014 Baidu Inc. All rights reserved.
- * 
+ *
  * @file 轮播图控件
  * @author zfkun(zfkun@msn.com)
  */
@@ -10,6 +10,7 @@ define(function ( require ) {
 
     var lang = require( 'saber-lang' );
     var dom = require( 'saber-dom' );
+    var ui = require( './main' );
     var Control = require( './Control' );
 
     /**
@@ -47,7 +48,7 @@ define(function ( require ) {
 
         /**
          * 控件类型标识
-         * 
+         *
          * @private
          * @type {string}
          */
@@ -76,10 +77,18 @@ define(function ( require ) {
 
         /**
          * 是否启用dot
-         * 
+         *
          * @type {boolean}
          */
         dot: true,
+
+        /**
+         * 是否自适应屏幕旋转
+         * 此配置在插件`SliderFlex`引入后才起作用
+         *
+         * @type {boolean}
+         */
+        flex: false,
 
         /**
          * 初始位置
@@ -124,14 +133,10 @@ define(function ( require ) {
 
         //     Control.prototype.initOptions.call( this, properties );
         // }
-        
-        initStructure: function () {
-            var self = this;
 
-            // wrapper
+        initStructure: function () {
             var wrapper = dom.query( '[data-role=wrapper]', this.main );
 
-            // item
             var items = dom.children( wrapper || this.main ).filter(
                 function ( node ) {
                     var role = node.hasAttribute( 'data-role' );
@@ -167,29 +172,30 @@ define(function ( require ) {
 
 
             // dot
-            if ( self.dot ) {
+            if ( this.dot ) {
                 var dot = dom.query( '[data-role=dot]', this.main );
                 if ( !dot ) {
                     dot = document.createElement( 'div' );
                     dom.setData( dot, 'role', 'dot' );
-                    
+
                     dot.innerHTML = items.map(
                         function ( node, j ) {
                             return '<b' + ( j === 0 ? ' class="' + this + '"' : '') +'></b>';
                         },
-                        self.dotActiveCls
+                        this.dotActiveCls
                     ).join( '' );
 
                     this.main.appendChild( dot );
                 }
+            }
 
-                this.dot = dot;
+            // 屏幕旋转自适应支持
+            if ( this.flex ) {
+                ui.activePlugin( this, 'SliderFlex', ( this.options.plugin || {} ).flex );
             }
         },
 
         initEvent: function () {
-            var self = this;
-
             // 每次拖动开始时的X
             var startX;
             // 上次有效拖动的相对位移值
@@ -200,99 +206,101 @@ define(function ( require ) {
             // 上次拖动完成后的左边距
             this.x = 0;
 
-            // DOM事件聚合, 方便统一管理
-            var binds = this.binds = {};
+            this.helper.addDOMEvent( this.main, 'touchstart', function ( e ) {
+                if ( !this.isActive ) {
+                    return;
+                }
 
-            binds.touchstart = function ( e ) {
-                // 这个屏蔽很重要哦，亲~~
-                e.preventDefault();
-
-                if ( self.loop ) {
-                    self._loop( true );
+                if ( this.loop ) {
+                    this._loop( true );
                 }
 
                 startX = e.touches[ 0 ].pageX;
                 diffX = 0;
-            };
+            } );
 
-            binds.touchmove = function ( e ) {
+            this.helper.addDOMEvent( this.main, 'touchmove', function ( e ) {
+                if ( !this.isActive ) {
+                    return;
+                }
+
                 diffX = e.touches[ 0 ].pageX - startX;
 
                 // 超过移动阀值，才进行移动，防止影响内部的点击
-                if ( Math.abs( diffX ) > self.moveAt ) {
-                    x = self.x + diffX;
+                if ( Math.abs( diffX ) > this.moveAt ) {
+                    e.preventDefault();
 
-                    self._move( x );
+                    x = this.x + diffX;
+
+                    this._move( x );
                 }
-            };
+            } );
 
-            binds.touchend = function ( e ) {
+            this.helper.addDOMEvent( this.main, 'touchend', function ( e ) {
+                if ( !this.isActive ) {
+                    return;
+                }
+
                 var diff = Math.abs( diffX );
 
                 // 超过移动阀值，才进行拖动结束后的修正，防止影响内部的点击
-                if ( diff < self.moveAt ) {
+                if ( diff < this.moveAt ) {
                     return;
                 }
 
                 // update
-                self.x = x;
-                
+                this.x = x;
+
                 // 达到切换阀值，则根据滑动方向切换
-                if ( diff > self.switchAt ) {
-                    self.to( self.index + ( diffX < 0 ? 1 : -1 ) );
+                if ( diff > this.switchAt ) {
+                    this.to( this.index + ( diffX < 0 ? 1 : -1 ) );
                 }
                 // 未达到阀值，则回弹复位
                 else {
-                    self.to( self.index );
+                    this.to( this.index );
                 }
 
                 // 恢复自动轮换
-                if ( self.loop ) {
-                    self._loop();
+                if ( this.loop ) {
+                    this._loop();
                 }
-            };
+            } );
 
-            // 屏幕旋转需做下重绘处理
-            this.onOriChange = function () {
-                var loop = self.loop;
-
-                if ( loop ) {
-                    self._loop( true );
-                }
-                
-                self._resize( styleNumber( self.main ) );
-                self.to( self.index );
-
-                if ( loop ) {
-                    self._loop();
-                }
-            };
-
-            // dot更新
-            if ( self.dot ) {
-                this.onDotActive = function ( ev, from, to ) {
-                    dom.children( self.dot ).forEach(
+            // dot
+            if ( this.dot ) {
+                this.on( 'change', function ( ev, from, to ) {
+                    dom.children( dom.query( '[data-role=dot]', this.main ) ).forEach(
                         function ( node, i ) {
                             dom[ i === to ? 'addClass' : 'removeClass' ]( node, this );
                         },
-                        self.dotActiveCls
+                        this.dotActiveCls
                     );
-                };
+                } );
             }
         },
 
         /**
          * 重新渲染视图
          * 首次渲染时, 不传入 changes 参数
-         * 
+         *
          * @override
          * @param {Object=} changes 变更过的属性的集合
          */
         repaint: function ( changes ) {
             // `render` 阶段调用时,不传入 `changes`
             if ( !changes ) {
-                this._resize( this.width || styleNumber( this.main ), true );
+                this._resize( this.width );
                 this.active();
+            }
+
+            // `SliderFlex` 插件更新
+            if ( changes && changes.hasOwnProperty( 'flex' ) ) {
+                if ( this.flex ) {
+                    ui.activePlugin( this, 'SliderFlex', ( this.options.plugin || {} ).flex );
+                }
+                else {
+                    ui.disposePlugin( this, 'SliderFlex' );
+                }
             }
 
             // 父类方法最后调用处理
@@ -301,7 +309,7 @@ define(function ( require ) {
 
         /**
          * 批量设置控件的属性值
-         * 
+         *
          * @override
          * @param {Object} properties 属性值集合
          */
@@ -329,9 +337,13 @@ define(function ( require ) {
             Control.prototype.dispose.call( this );
         },
 
-        _resize: function ( width, isForce ) {
-            if ( width == this.width && !isForce ) {
-                return this;
+        _resize: function ( width ) {
+            if ( !width ) {
+                // 未指定宽度时，仅在容器宽度发生变化时才重绘
+                width = styleNumber( this.main );
+                if ( width == this.width ) {
+                    return this;
+                }
             }
 
             var children = dom.children( this.wrapper );
@@ -359,7 +371,7 @@ define(function ( require ) {
 
             self.timer = clearTimeout( self.timer );
 
-            if ( isStop || this.length < 2 || !delay || delay < 0 ) {
+            if ( isStop || self.length < 2 || !delay || delay < 0 ) {
                 return;
             }
 
@@ -391,17 +403,6 @@ define(function ( require ) {
             if ( !this.isActive ) {
                 this.isActive = true;
 
-                // 控件主元素DOM事件绑定
-                toggleDOMEvents( this );
-                
-                // // 屏幕旋转处理绑定
-                // orientationHelper.on( 'change', this.onOriChange );
-
-                // 处理dot高亮
-                if ( this.dot ) {
-                    this.on( 'change', this.onDotActive );
-                }
-
                 // 启动自动切换
                 if ( this.loop ) {
                     this._loop();
@@ -426,17 +427,6 @@ define(function ( require ) {
             if ( this.isActive ) {
                 this.isActive = false;
 
-                // 控件主元素DOM事件解绑
-                toggleDOMEvents( this, true );
-
-                // // 屏幕旋转处理解绑
-                // orientationHelper.off( 'change', this.onOriChange );
-
-                // dot高亮
-                if ( this.dot ) {
-                    this.off( 'change', this.onDotActive );
-                }
-
                 // 停止自动切换
                 this._loop( true );
 
@@ -457,6 +447,10 @@ define(function ( require ) {
          * @return {Slider} 当前实例
          */
         to: function ( index ) {
+            if ( !this.isActive ) {
+                return this;
+            }
+
             var from = this.index;
 
             // 防越界
@@ -523,32 +517,12 @@ define(function ( require ) {
      */
     function styleNumber ( node, name, val ) {
         name = name || 'width';
-        
+
         if ( arguments.length > 2 ) {
             return dom.setStyle( node, name, ( parseInt( val, 10 ) || 0 ) + 'px' );
         }
 
         return parseInt( dom.getStyle( node, name ), 10 ) || 0;
-    }
-
-    /**
-     * Slider 控件相关DOM事件管理
-     *
-     * @inner
-     * @param {Slider} slider `Slider`实例对象
-     * @param {boolean} isOff 是否移除绑定事件
-     */
-    function toggleDOMEvents ( slider, isOff ) {
-        var main = slider.main;
-        var binds = slider.binds;
-
-        if ( !main || !binds ) {
-            return;
-        }
-
-        for ( var type in binds ) {
-            slider.helper[ isOff ? 'removeDOMEvent' : 'addDOMEvent' ]( slider.main, type, binds[ type ] );
-        }
     }
 
 
