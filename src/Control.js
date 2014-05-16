@@ -52,6 +52,10 @@ define(function ( require ) {
 
         options = options || {};
 
+        // 运行时缓存区
+        // 加这货，主要为了让`不对外服务`的`动态属性`变量有个好归
+        this.runtime = {};
+
         // 控件状态集
         this.states = {};
 
