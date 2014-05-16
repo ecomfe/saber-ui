@@ -192,6 +192,8 @@ define(function ( require ) {
             this.rendered = !0;
 
             this.attachEvents();
+
+            this.repaint();
         }
 
     };
