@@ -153,6 +153,7 @@ define(function ( require ) {
 
                 this.main.appendChild( wrapper );
             }
+            // 已存在包装容器，直接遍历更新`item`部件,补充`role`标识
             else {
                 items.forEach(
                     function ( item ) {
@@ -161,9 +162,8 @@ define(function ( require ) {
                 );
             }
 
-            // xxx: 考虑是否移除或封闭
-            this.length = items.length;
-            this.wrapper = wrapper;
+            this.runtime.length = items.length;
+            this.runtime.wrapper = wrapper;
 
 
             // dot
@@ -199,7 +199,7 @@ define(function ( require ) {
             var x = 0;
 
             // 上次拖动完成后的左边距
-            this.x = 0;
+            this.runtime.x = 0;
 
             this.helper.addDOMEvent( this.main, 'touchstart', function ( e ) {
                 if ( !this.isActive ) {
@@ -225,7 +225,7 @@ define(function ( require ) {
                 if ( Math.abs( diffX ) > this.moveAt ) {
                     e.preventDefault();
 
-                    x = this.x + diffX;
+                    x = this.runtime.x + diffX;
 
                     this._move( x );
                 }
@@ -244,7 +244,7 @@ define(function ( require ) {
                 }
 
                 // update
-                this.x = x;
+                this.runtime.x = x;
 
                 // 达到切换阀值，则根据滑动方向切换
                 if ( diff > this.switchAt ) {
@@ -284,7 +284,7 @@ define(function ( require ) {
         repaint: function ( changes ) {
             // `render` 阶段调用时,不传入 `changes`
             if ( !changes ) {
-                this._resize( this.width );
+                this._resize( this.runtime.width );
                 this.active();
             }
 
@@ -332,26 +332,34 @@ define(function ( require ) {
             Control.prototype.dispose.call( this );
         },
 
+        /**
+         * 调整组件宽度
+         *
+         * @private
+         * @param {number=} width 指定的容器宽度
+         */
         _resize: function ( width ) {
+            var runtime = this.runtime;
+
             if ( !width ) {
                 // 未指定宽度时，仅在容器宽度发生变化时才重绘
                 width = styleNumber( this.main );
-                if ( width == this.width ) {
+                if ( width == runtime.width ) {
                     return this;
                 }
             }
 
-            var children = dom.children( this.wrapper );
+            var children = dom.children( runtime.wrapper );
             var childrenCount = children.length;
 
             for ( var i = 0; i < childrenCount; i++ ) {
                 styleNumber( children[ i ], 'width', width );
             }
 
-            styleNumber( this.wrapper, 'width', width * childrenCount );
+            styleNumber( runtime.wrapper, 'width', width * childrenCount );
 
-            var oldWidth = this.width;
-            this.width = width;
+            var oldWidth = runtime.width;
+            runtime.width = width;
 
             /**
              * @event Slider#resize
@@ -361,25 +369,41 @@ define(function ( require ) {
             this.emit( 'resize', oldWidth, width );
         },
 
+        /**
+         * 启动/停止轮播
+         *
+         * @private
+         * @param {boolean=} isStop 是否停止
+         */
         _loop: function ( isStop ) {
-            var self = this, delay = self.loopDelay;
+            this.timer = clearTimeout( this.timer );
 
-            self.timer = clearTimeout( self.timer );
+            var delay = this.loopDelay;
 
-            if ( isStop || self.length < 2 || !delay || delay < 0 ) {
+            if ( isStop || this.runtime.length < 2 || !delay || delay < 0 ) {
                 return;
             }
 
-            self.timer = setTimeout( function () {
-                var index = self.index + 1;
-                self.to( index < self.length ? index : 0 );
-                self._loop();
-            }, delay );
+            this.timer = setTimeout(
+                lang.bind( function () {
+                    var index = this.index + 1;
+                    this.to( index < this.runtime.length ? index : 0 );
+                    this._loop();
+                }, this ),
+                delay
+            );
         },
 
+        /**
+         * 切换移动
+         *
+         * @private
+         * @param {number} x X轴偏移量
+         * @param {number=} speed 移动速度,单位毫秒
+         */
         _move: function ( x, speed ) {
             speed = speed || 0;
-            this.wrapper.style.cssText += [
+            this.runtime.wrapper.style.cssText += [
                 ( this.animate ? '-webkit-transition-duration:' + speed + 'ms;' : '' ),
                 '-webkit-transform: translate(' + x + 'px, 0)',
                 ' translateZ(0)',
@@ -446,18 +470,19 @@ define(function ( require ) {
                 return this;
             }
 
+            var runtime = this.runtime;
             var from = this.index;
 
             // 防越界
-            index = Math.max( 0, Math.min( this.length - 1, index ) );
+            index = Math.max( 0, Math.min( runtime.length - 1, index ) );
 
             // 提前更新,以防不测- -
             this.index = index;
 
-            // 计算X轴偏移
-            this.x = 0 - this.width * index;
+            // 更新计算X轴偏移
+            runtime.x = 0 - runtime.width * index;
 
-            this._move( this.x, this.speed );
+            this._move( runtime.x, this.speed );
 
             // 排除回弹
             if ( from !== index ) {
