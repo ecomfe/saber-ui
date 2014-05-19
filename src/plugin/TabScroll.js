@@ -24,7 +24,7 @@ define(function ( require ) {
      * @param {Object=} options 插件配置项
      * 此参数不做加工过滤，直接传给`saber-scroll`构造函数
      */
-    var Scroll = function( tab ) {
+    var Scroll = function( tab, options ) {
         /**
          * 选项卡控件实例
          *
@@ -32,7 +32,7 @@ define(function ( require ) {
          * @type {Tab}
          */
         this.target = tab;
-        this.initOptions.apply( this, Array.prototype.slice.call( arguments, 1 ) );
+        this.initOptions( options );
     };
 
     Scroll.prototype = {
@@ -49,7 +49,7 @@ define(function ( require ) {
          * 插件初始化
          *
          * @protected
-         * @param {Object} options 构造函数传入的配置参数
+         * @param {Object=} options 构造函数传入的配置参数
          * 此参数不做加工过滤，直接传给`saber-scroll`构造函数
          */
         initOptions: function ( options ) {
@@ -73,7 +73,7 @@ define(function ( require ) {
          */
         initStructure: function () {
             var tab = this.target;
-            var trigger = dom.g( tab.helper.getId( 'navigator' ) );
+            var trigger = dom.query( '[data-role=navigator]', tab.main );
 
             // 初始化前需要确保`saber-scroll`的标准结构复合要求
             // `<container><main>...</main></container>`
@@ -86,16 +86,15 @@ define(function ( require ) {
             if ( firstChild !== scroller ) {
                 if ( !scroller ) {
                     scroller = document.createElement( 'div' );
-                    scroller.setAttribute( 'data-role', 'scroll' );
                 }
 
                 tab.main.insertBefore( scroller, firstChild );
                 scroller.appendChild( trigger );
             }
 
-            // 确保`scroller`部件元素设置了正确的`id`和`部件样式`
+            // 确保`scroller`部件元素设置了正确的`id`和`role`
             scroller.id = tab.helper.getId( 'scroller' );
-            tab.helper.addPartClasses( 'scroller', scroller );
+            dom.setData( scroller, 'role', 'scroll' );
 
             // 这里最后检查并确保`navigator`部件元素
             // 是`scroller`部件元素的`第一子元素`

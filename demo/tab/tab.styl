@@ -1,27 +1,28 @@
-.state-hidden
-    display: none !important
+// Rider UI 默认主题
+//
+// @desc    轮播图
+// @author  zfkun(zfkun@msn.com)
+
+
+@require 'rider-ui/core'
+
+
+$-role-attr ?= 'data-role'
+
 
 .ui-tab
     user-select: none;
 
-.ui-tab-scroller
-    .ui-tab-navigator
-        display: table
-        table-layout: fixed
-    .ui-tab-item
-        display: table-cell
+    [data-role=navigator]
+        display: flex
+        margin: 0
+        padding: 0
+        white-space: nowrap
+        list-style: none
+        background: #2773dc
+        color: #fff
 
-
-.ui-tab-navigator
-    display: flex
-    margin: 0
-    padding: 0
-    white-space: nowrap
-    list-style: none
-    background: #2773dc
-    color: #fff
-
-    .ui-tab-item
+    [data-role=trigger]
         // display: list-item
         flex: 1
         box-sizing: content-box
@@ -33,24 +34,38 @@
         // white-space: nowrap
         ellipsis()
 
-    .ui-tab-item-active
-        cursor: default
-        background: #0c4da8
+        &.active
+            cursor: default
+            background: #0c4da8
 
-// 横向
-// .ui-tab-horizontal
-//     .ui-tab-navigator
-//     .ui-tab-item
 
-// 纵向
-.ui-tab-vertical
-    height: 100%
-    .ui-tab-navigator, .ui-tab-item
-        display: block
+    // 隐藏
+    &[data-ui~=hidden]
+        display: none !important
 
-// 禁用
-.ui-tab-disabled
-    .ui-tab-navigator
-        opacity: .3;
-    .ui-tab-item
-        cursor: default;
+    // 滚动
+    &[data-ui~=scroller]
+        [data-role=navigator]
+            display: table
+            table-layout: fixed
+        [data-role=trigger]
+            display: table-cell
+
+
+    // // 横向
+    // &[data-ui~=horizontal]
+    //     [data-role=navigator]
+    //     [data-role=trigger]
+
+    // 纵向
+    &[data-ui~=vertical]
+        [data-role=navigator],
+        [data-role=trigger]
+            display: block
+
+    // 禁用
+    &[data-ui~=disabled]
+        [data-role=navigator]
+            opacity: .3;
+        [data-role=trigger]
+            cursor: default;

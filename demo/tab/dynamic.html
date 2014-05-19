@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Tab - Saber UI Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="tab.css">
+    <link rel="stylesheet" href="demo.css">
+    <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-6-10/esl.js"></script>
+    <script>
+    require.config({
+        'packages': [
+            {
+                'name': 'saber-dom',
+                'location': '../dep/saber-dom/0.4.0/src',
+                'main': 'main'
+            },
+            {
+                'name': 'saber-string',
+                'location': '../dep/saber-string/0.3.0/src',
+                'main': 'main'
+            },
+            {
+                'name': 'saber-lang',
+                'location': '../dep/saber-lang/0.3.1/src',
+                'main': 'main'
+            },
+            {
+                'name': 'saber-emitter',
+                'location': '../dep/saber-emitter/0.5.0/src',
+                'main': 'emitter'
+            },
+            {
+                'name': 'saber-scroll',
+                'location': '../dep/saber-scroll/0.1.2/src',
+                'main': 'main'
+            },
+            {
+                'name': 'saber-run',
+                'location': '../dep/saber-run/0.2.0/src',
+                'main': 'main'
+            },
+            {
+                'name': 'saber-promise',
+                'location': '../dep/saber-promise/0.1.2/src',
+                'main': 'promise'
+            },
+            {
+                'name': 'saber-tap',
+                'location': '../dep/saber-tap/0.1.2/src',
+                'main': 'tap'
+            },
+            {
+                'name': 'saber-matchmedia',
+                'location': '../dep/saber-matchmedia/0.1.0/src',
+                'main': 'main'
+            },
+            {
+                'name': 'saber-ui',
+                'location': '../../src',
+                'main': 'main'
+            }
+        ],
+        'paths': {}
+    });
+    </script>
+
+</head>
+
+<body>
+    <s-bar ui="primary header">
+        <a href="./" class="ui-btn" data-ui="primary">&lt;返回</a>
+        <h1 data-ui="title">Tab - Saber UI</h1>
+        <a href="#" class="ui-btn" data-ui="primary">设置</a>
+    </s-bar>
+
+    <div class="container">
+        <h2>动态化创建</h2>
+        <div id="wrapper2" class="wrapper">
+            <div id="panels">
+                <div id="d1" class="panel">我是A</div>
+                <div id="d2" class="panel">我是B<div id="innerTab"></div></div>
+                <div id="d3" class="panel">我是C</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    require(
+        [
+            'saber-tap',
+            'saber-dom/selector',
+            'saber-ui',
+            'saber-ui/Tab'
+        ],
+        function( Tap, selector, ui, Tab ) {
+            var $ = selector.query;
+
+            // 300ms 点击延迟修复
+            Tap.mixin( $( '.container' ) );
+
+            // 更新全局配置
+            ui.config( { uiPrefix: 's-ui', pluginPrefix: 's-plugin' } );
+
+            // 动态化
+            var tabItems = [
+                { title: 'A', panel: 'd1' },
+                { title: 'B', panel: 'd2' },
+                { title: 'C', panel: 'd3' }
+            ];
+            var t1 = new Tab({
+                // orientation: 'vertical',
+                tabs: tabItems
+            });
+            t1.on( 'change', function ( ev, data ) {
+                // console.info( 'change to %s: %o', data.index, data.tab );
+                if ( data.index === 1) {
+                    if ( !innerTab ) {
+                        innerTab = createInnerTab( $( '#innerTab' ) );
+                    }
+                }
+            });
+            t1.insertBefore( $('#panels') );
+
+
+
+            var innerTab;
+            function createInnerTab( wraper ) {
+                var panel = $( '#dd' );
+                if ( !panel ) {
+                    panel = document.createElement( 'div' );
+                    panel.id = 'dd';
+                    panel.className = 'panel';
+                    wraper.appendChild( panel );
+                }
+
+                var items = [
+                    { title: '新闻' },
+                    { title: '教育' },
+                    { title: '健康' }
+                ];
+                var t = new Tab( { tabs: items, activeIndex: 1 } );
+                t.onchange = function ( ev, data ) {
+                    $( '#dd' ).innerHTML = 'NO.'
+                        + data.index
+                        + ' : '
+                        + data.tab.title ;
+                };
+                t.insertBefore( panel );
+
+                return t;
+            }
+        }
+    );
+    </script>
+</body>
+</html>

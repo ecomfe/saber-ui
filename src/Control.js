@@ -52,8 +52,13 @@ define(function ( require ) {
 
         options = options || {};
 
-        // 运行时缓存区
         // 加这货，主要为了让`不对外服务`的`动态属性`变量有个好归
+        /**
+         * 运行时缓存区对象
+         *
+         * @type {Object}
+         * @protected
+         */
         this.runtime = {};
 
         // 控件状态集
@@ -268,8 +273,8 @@ define(function ( require ) {
                 // 为控件主元素添加控件实例标识属性
                 this.main.setAttribute( ui.getConfig( 'instanceAttr' ), this.id );
 
-                // 为控件主元素添加控件相关的class
-                this.helper.addPartClasses();
+                // 为空间主元素添加控件class
+                this.helper.addClass();
             }
 
             // 子类自行覆盖扩展
@@ -331,14 +336,16 @@ define(function ( require ) {
          * @public
          */
         destroy: function () {
-            var main = this.main;
-
             this.dispose();
 
+            // 清理运行时缓存区
+            this.runtime = null;
+
+            // 销毁主元素&释放引用
+            var main = this.main;
             if ( main && main.parentNode ) {
                 main.parentNode.removeChild( main );
             }
-
             this.main = null;
         },
 
@@ -624,7 +631,7 @@ define(function ( require ) {
                 this.main.setAttribute( state, state );
             }
 
-            this.helper.addStateClasses( state );
+            this.helper.addState( state );
 
             var properties = {};
             properties[ state ] = true;
@@ -645,7 +652,7 @@ define(function ( require ) {
                 this.main.removeAttribute( state );
             }
 
-            this.helper.removeStateClasses( state );
+            this.helper.removeState( state );
 
             var properties = {};
             properties[ state ] = false;

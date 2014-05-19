@@ -83,7 +83,7 @@
         <div id="wrapper1" class="wrapper">
             <div class="loading">初始化中...</div>
 
-            <div class="ui-tab" s-ui="type:Tab;activeIndex:2">
+            <s-tab activeIndex="2">
                 <ul data-role="navigator">
                     <li data-for="a">A</li>
                     <li style="color: red">No</li>
@@ -94,15 +94,15 @@
                 <div id="b" class="panel">我是B</div>
                 <div id="c" class="panel">我是C</div>
                 <div class="panel" style="color:red">我是永远显示的哦</div>
-            </div>
+            </s-tab>
 
             <div id="tabConsole">
-                <button id="setTabBtn">更换tab内容</button>
-                <button id="addTabBtn">添加新tab</button>
-                <button id="removeTabBtn">删除新tab</button>
-                <button id="switchTabBtn">禁用tab</button>
-                <button id="toggleTabBtn">隐藏tab</button>
-                <button id="dirTabBtn">纵向tab</button>
+                <a href="#" class="ui-btn" data-ui="primary small" id="setTabBtn">更换tab内容</a>
+                <a href="#" class="ui-btn" data-ui="success small" id="addTabBtn">添加新tab</a>
+                <a href="#" class="ui-btn" data-ui="danger small" id="removeTabBtn">删除新tab</a>
+                <a href="#" class="ui-btn" data-ui="danger small" id="switchTabBtn">禁用tab</a>
+                <a href="#" class="ui-btn" data-ui="warning small" id="toggleTabBtn">隐藏tab</a>
+                <a href="#" class="ui-btn" data-ui="small" id="dirTabBtn">纵向tab</a>
             </div>
         </div>
     </div>

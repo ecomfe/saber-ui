@@ -40,7 +40,7 @@ define(function ( require ) {
      * @param {Slider} slider 轮播图控件实例
      * @param {Object=} options 插件配置项
      */
-    var Flex = function( slider ) {
+    var Flex = function( slider, options ) {
         /**
          * 轮播图控件实例
          *
@@ -48,7 +48,7 @@ define(function ( require ) {
          * @type {Slider}
          */
         this.target = slider;
-        this.initOptions.apply( this, Array.prototype.slice.call( arguments, 1 ) );
+        this.initOptions( options );
     };
 
     Flex.prototype = {
@@ -65,7 +65,7 @@ define(function ( require ) {
          * 插件初始化
          *
          * @protected
-         * @param {Object} options 构造函数传入的配置参数
+         * @param {Object=} options 构造函数传入的配置参数
          */
         initOptions: function ( options ) {
             this.options = options || {};

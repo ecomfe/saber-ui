@@ -32,8 +32,8 @@ define(function ( require ) {
      * @param {HTMLElement=} options.main 控件主元素
      * @param {string=} options.skin 控件皮肤
      * @param {boolean=} options.animate 是否启用切换动画
-     * @param {boolean=} options.loop 是否自动循环切换
-     * @param {boolean=} options.loopDelay 自动循环切换间隔，单位毫秒
+     * @param {boolean=} options.auto 是否自动循环切换
+     * @param {boolean=} options.autoDelay 自动循环切换间隔，单位毫秒
      * @param {boolean=} options.dot 是否显示dot
      * @param {boolean=} options.flex 是否自适应屏幕旋转
      * @param {boolean=} options.index 初始位置
@@ -68,14 +68,14 @@ define(function ( require ) {
          *
          * @type {boolean}
          */
-        loop: true,
+        auto: true,
 
         /**
          * 自动循环切换间隔，单位毫秒
          *
          * @type {number}
          */
-        loopDelay: 2000,
+        autoDelay: 2000,
 
         /**
          * 是否启用dot
@@ -129,6 +129,11 @@ define(function ( require ) {
          */
         dotActiveCls: 'active',
 
+        /**
+         * 初始化DOM
+         *
+         * @override
+         */
         initStructure: function () {
             var wrapper = dom.query( '[data-role=wrapper]', this.main );
 
@@ -190,6 +195,11 @@ define(function ( require ) {
             }
         },
 
+        /**
+         * 初始化事件
+         *
+         * @override
+         */
         initEvent: function () {
             // 每次拖动开始时的X
             var startX;
@@ -206,7 +216,7 @@ define(function ( require ) {
                     return;
                 }
 
-                if ( this.loop ) {
+                if ( this.auto ) {
                     this._loop( true );
                 }
 
@@ -256,7 +266,7 @@ define(function ( require ) {
                 }
 
                 // 恢复自动轮换
-                if ( this.loop ) {
+                if ( this.auto ) {
                     this._loop();
                 }
             } );
@@ -378,7 +388,7 @@ define(function ( require ) {
         _loop: function ( isStop ) {
             this.timer = clearTimeout( this.timer );
 
-            var delay = this.loopDelay;
+            var delay = this.autoDelay;
 
             if ( isStop || this.runtime.length < 2 || !delay || delay < 0 ) {
                 return;
@@ -423,7 +433,7 @@ define(function ( require ) {
                 this.isActive = true;
 
                 // 启动自动切换
-                if ( this.loop ) {
+                if ( this.auto ) {
                     this._loop();
                 }
 

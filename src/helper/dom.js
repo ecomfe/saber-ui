@@ -31,195 +31,109 @@ define( function ( require ) {
     };
 
 
-
     /**
-     * 获取控件用于生成css class的类型
+     * 获取控件部件元素对应的class
      *
-     * @inner
-     * @param {Control} control 控件实例
+     * @public
+     * @param {string=} part 控件内部件名称
      * @return {string}
      */
-    function getControlClassType( control ) {
-        return control.type.toLowerCase();
-    }
-
-    /**
-     * 将参数用`-`连接成字符串
-     *
-     * @inner
-     * @param {...string} var_args 待连接的字符串组
-     * @return {string} 连接后的合成字符串
-     */
-    function joinByStrike() {
-        return [].slice.call( arguments ).join( '-' );
-    }
-
-    /**
-     * 批量添加class到目标元素
-     *
-     * @inner
-     * @param {HTMLElement} element 目标元素
-     * @param {Array} classes 待添加的class数组
-     */
-    function addClasses( element, classes ) {
-        classes.forEach(
-            function ( cls ) {
-                dom.addClass( this, cls );
-            },
-            element
-        );
-    }
-
-    /**
-     * 批量删除目标元素的class
-     *
-     * @inner
-     * @param {HTMLElement} element 目标元素
-     * @param {Array} classes 待删除的class数组
-     */
-    function removeClasses( element, classes ) {
-        classes.forEach(
-            function ( cls ) {
-                dom.removeClass( this, cls );
-            },
-            element
-        );
-    }
-
-    /**
-     * 获取控件相关的class数组
-     *
-     * @public
-     * @param {string=} part 控件内部件名称
-     * @return {Array.<string>}
-     */
-    exports.getPartClasses = function ( part ) {
-        // main:
-        //   ui-{commonCls} 为了定义有限全局的normalize
-        //   ui-{type}
-        //   skin-{skinname}
-        //   skin-{skinname}-{type}  移动端暂时废弃( .ui-{type}.skin-{skinname} )
-        // part:
-        //   ui-{type}-{part}
-        //   skin-{skinname}-{type}-{part}
-
-        var type = getControlClassType( this.control );
-        var skin = this.control.skin;
-        var prefix = ui.getConfig( 'uiClassPrefix' );
-        var skinPrefix = ui.getConfig( 'skinClassPrefix' );
-        var commonCls = ui.getConfig( 'uiClassControl' );
-        var classes = [];
-
-        if ( part ) {
-            classes.push( joinByStrike( prefix, type, part ) );
-            if ( skin ) {
-                classes.push( joinByStrike( skinPrefix, skin, type, part ) );
-            }
-        }
-        else {
-            classes.push(
-                joinByStrike( prefix, commonCls ),
-                joinByStrike( prefix, type )
-            );
-            if ( skin ) {
-                classes.push(
-                    joinByStrike( skinPrefix, skin ),
-                    joinByStrike( skinPrefix, skin, type )
-                );
-            }
-        }
-
-        return classes;
-    };
-
-    /**
-     * 添加控件相关的class
-     *
-     * @public
-     * @param {string=} part 控件内部件名称
-     * @param {HTMLElement=} element 控件内部件元素
-     */
-    exports.addPartClasses = function ( part, element ) {
-        element = element || this.control.main;
-        if ( element ) {
-            addClasses(
-                element,
-                this.getPartClasses( part )
-            );
-        }
-    };
-
-    /**
-     * 移除控件相关的class
-     *
-     * @public
-     * @param {string=} part 控件内部件名称
-     * @param {HTMLElement=} element 控件内部件元素
-     */
-    exports.removePartClasses = function ( part, element ) {
-        element = element || this.control.main;
-        if ( element ) {
-            removeClasses(
-                element,
-                this.getPartClasses( part, element )
-            );
-        }
-    };
-
-    /**
-     * 获取控件状态相关的class数组
-     *
-     * @public
-     * @param {string} state 状态名称
-     * @return {Array.<string>}
-     */
-    exports.getStateClasses = function ( state ) {
-        // ui-{type}-{statename}
-        // state-{statename}
-        // skin-{skinname}-{statename}
-        // skin-{skinname}-{type}-{statename}
-
-        var type = getControlClassType( this.control );
-        var classes = [
-            joinByStrike( ui.getConfig( 'uiClassPrefix' ), type, state ),
-            joinByStrike( ui.getConfig( 'stateClassPrefix' ), state )
+    exports.getClass = function ( part ) {
+        var classParts = [
+            ui.getConfig( 'uiClassPrefix' ),
+            this.control.type.toLowerCase()
         ];
 
-        var skin = this.control.skin;
-        if ( skin ) {
-            var skinPrefix = ui.getConfig( 'skinClassPrefix' );
-            classes.push(
-                joinByStrike( skinPrefix, skin, state ),
-                joinByStrike( skinPrefix, skin, type, state )
-            );
+        if ( part ) {
+            classParts.push( part );
         }
 
-        return classes;
+        return classParts.join( '-' );
     };
 
     /**
-     * 添加控件状态相关的class
+     * 添加控件部件元素对应的class
      *
      * @public
-     * @param {string} state 状态名称
+     * @param {string=} part 控件内部件名称
+     * @param {HTMLElement=} element 控件内部件元素
      */
-    exports.addStateClasses = function ( state ) {
-        if ( this.control.main ) {
-            addClasses( this.control.main, this.getStateClasses( state ) );
+    exports.addClass = function ( part, element ) {
+        element = element || this.control.main;
+        if ( element ) {
+            dom.addClass( element, this.getClass( part ) );
         }
     };
 
     /**
-     * 移除控件状态相关的class
+     * 移除控件部件元素对应的class
+     *
+     * @public
+     * @param {string=} part 控件内部件名称
+     * @param {HTMLElement=} element 控件内部件元素
+     */
+    exports.removeClass = function ( part, element ) {
+        element = element || this.control.main;
+        if ( element ) {
+            dom.removeClass( element, this.getClass( part ) );
+        }
+    };
+
+
+    /**
+     * 添加控件状态相关的UI属性
      *
      * @public
      * @param {string} state 状态名称
      */
-    exports.removeStateClasses = function ( state ) {
+    exports.addState = function ( state ) {
         if ( this.control.main ) {
-            removeClasses( this.control.main, this.getStateClasses( state ) );
+            addUIData( this.control.main, state );
         }
     };
+
+    /**
+     * 移除控件状态相关的UI属性
+     *
+     * @public
+     * @param {string} state 状态名称
+     */
+    exports.removeState = function ( state ) {
+        if ( this.control.main ) {
+            removeUIData( this.control.main, state );
+        }
+    };
+
+
+    function getUIData ( element ) {
+        if ( element ) {
+            return ( dom.getData( element, 'ui' ) || '' )
+                .trim()
+                .replace( /\s\s+/g, ' ' )
+                .split( ' ' );
+        }
+
+        return [];
+    }
+
+
+    function addUIData ( element, val ) {
+        var data = getUIData( element );
+        if ( data.length && data.indexOf( val ) < 0 ) {
+            data.push( val );
+            dom.setData( element, 'ui', data.join( ' ' ) );
+        }
+    }
+
+    function removeUIData ( element, val ) {
+        var data = getUIData( element );
+        if ( data.length ) {
+            data = data.filter( function ( v ) {
+                return v !== val;
+            } ).join( ' ' );
+            dom.setData( element, 'ui', data );
+        }
+    }
 
 
     return exports;

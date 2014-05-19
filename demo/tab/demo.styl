@@ -1,21 +1,14 @@
-initialize()
+@require 'rider-ui/default'
 
-
-html
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
-
-header
-    background: #252525
-    color: #fff
-    margin-bottom: rem(10px)
-    padding: rem(8px)
-    font-size: rem(22px)
 
 .container
-    padding: rem(10px)
+    padding: 44px 10px
+
+    h2
+        margin: 10px 0
 
 .wrapper
-    relative()
+    relative: _
     // display: flex
     // align-items: flex-start
     box-shadow: rem(2px) rem(2px) rem(5px) #DDD
@@ -31,9 +24,9 @@ header
 
     absolute: left, top
     z-index: 99
-    
+
     size(100%)
-    
+
     background-color: rgba(0, 0, 0, 0.6)
     color: #fff
     font-size: 150%
@@ -47,10 +40,10 @@ header
 
 .container
     //
-    .ui-tab-navigator
+    [data-role=navigator]
         font-weight: bold
 
-    .ui-tab-panel
+    .panel
         box-sizing: content-box
         padding: rem(6px)
 
@@ -66,44 +59,44 @@ header
 #wrapper1
     //
     .ui-tab
-        border: rem(1px) solid #d4d4d4
+        border: 1px solid #d4d4d4
         clearfix()
 
-    .ui-tab-navigator
-        background-color: #f4f4f4
-        color: #4a4a4a
+        [data-role=navigator]
+            background-color: #f4f4f4
+            color: #4a4a4a
 
-    .ui-tab-item
-        border: solid #d4d4d4
-        border-width: 0 0 rem(1px) rem(1px)
-        &:first-child
-            border-width: 0 0 rem(1px) 0
-
-    .ui-tab-item-active
-        background-color: #fff
-        border-width: 0 0 0 rem(1px)
-        &:first-child
-            border-width: 0
-
-    .ui-tab-vertical
-        //
-        .ui-tab-navigator,
-        .ui-tab-panel        
-            float: left
-
-        .ui-tab-item
-            border-width: rem(1px) 0 0 0
+        [data-role=trigger]
+            border: solid #d4d4d4
+            border-width: 0 0 1px 1px
             &:first-child
-                border-width: 0
+                border-width: _ _ _ 0
 
-#wrapper2
-    //
-    .ui-tab-vertical
-        float: left
+            &.active
+                background-color: #fff
+                border-width: 0 0 0 1px
+                &:first-child
+                    border-width: 0
+
+        &[data-ui~=vertical]
+
+            [data-role=navigator],
+            .panel
+                float: left
+
+            [data-role=trigger]
+                border-width: 1px 1px 0 0
+                &.active
+                    border-width: _ 0 _ _
+                &:first-child
+                    border-width: 0 _ _ _
 
 
 #tabConsole
     margin: rem(10px) 0
+
+    .ui-btn
+        margin: 3px
 
 #innerTab
     width: rem(250px)
@@ -137,7 +130,7 @@ header
     .menu
         min-width: rem(90px)
 
-    .panel
+    .panels
         relative()
         flex: 2
         width: 100%
@@ -148,4 +141,4 @@ header
 
 .dropmenu-hidden
     display: none
-    
+

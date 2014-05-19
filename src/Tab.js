@@ -117,14 +117,10 @@ define(function ( require ) {
             }, options );
 
 
-            // // 若静态化解析构建时，初始化参数值都是字符串，这里多做下转换
-            // properties.activeIndex = properties.activeIndex | 0;
-
             // 找到了`[data-role="navigator"]`的元素，抛弃其它配置，
             // 否则，尝试找到第一个ul子元素，找到同上
             // 且这个配置会覆盖用户传入的`tabs`选项
-            var trigger = dom.query( '[data-role=navigator]', this.main )
-                || dom.query( 'ul', this.main );
+            var trigger = dom.query( '[data-role=navigator]', this.main ) || dom.query( 'ul', this.main );
             if ( trigger ) {
                 // 清空用户传入的配置数据
                 properties.tabs = [];
@@ -135,14 +131,9 @@ define(function ( require ) {
                 // 解析DOM重新生成`options`.`tabs`配置数据
                 this.triggers.forEach(
                     function ( node ) {
-                        // // 添加部件相关样式
-                        // this.helper.addPartClasses( 'item', node );
-
                         // 生成对应配置参数并存储，待最后更新
                         properties.tabs.push({
-                            title: node.textContent
-                                || node.innerText
-                                || node.getAttribute( 'title' ),
+                            title: node.textContent || node.innerText || node.getAttribute( 'title' ),
                             panel: node.getAttribute( 'data-for' )
                         });
                     },
@@ -163,7 +154,6 @@ define(function ( require ) {
          * @protected
          */
         initStructure: function () {
-            var helper = this.helper;
             var trigger = this.trigger;
             var needRebuild = !trigger;
 
@@ -176,16 +166,12 @@ define(function ( require ) {
             // 这里先构建总容器元素`ul`
             if ( needRebuild ) {
                 trigger = document.createElement( 'ul' );
-                this.main.insertBefore(
-                    trigger,
-                    this.main.firstChild || null
-                );
+                this.main.insertBefore( trigger, this.main.firstChild || null );
             }
 
             // 初始化`navigator`元素相关属性、样式及事件
-            trigger.id = helper.getId( 'navigator' );
-            helper.addPartClasses( 'navigator', trigger );
-            helper.addDOMEvent( trigger, 'click', lang.bind( clickTab, this ) );
+            dom.setData( trigger, 'role', 'navigator' );
+            this.helper.addDOMEvent( trigger, 'click', lang.bind( clickTab, this ) );
 
             // 动态构建所有tab元素
             // 这行不能提前到上面的三行之前执行
@@ -198,7 +184,7 @@ define(function ( require ) {
                 // 静态构建时确保所有`trigger`生成了正确的class
                 this.triggers.forEach(
                     function ( node ) {
-                        helper.addPartClasses( 'item', node );
+                        dom.setData( node, 'role', 'trigger' );
                     }
                 );
             }
@@ -206,11 +192,7 @@ define(function ( require ) {
             // `navigator`部件滚动支持
             if ( this.scroll ) {
                 // 初始化`TabScroll`插件
-                ui.activePlugin(
-                    this,
-                    'TabScroll',
-                    ( this.options.plugin || {} )[ 'scroll' ]
-                );
+                ui.activePlugin( this, 'TabScroll', ( this.options.plugin || {} ).scroll );
             }
 
             // 激活默认项
@@ -262,11 +244,7 @@ define(function ( require ) {
             // TODO: 若`scroll`频繁的设置，可能会带来一定的开销，待后续优化
             if ( changes && changes.hasOwnProperty( 'scroll' ) ) {
                 if ( this.scroll ) {
-                    ui.activePlugin(
-                        this,
-                        'TabScroll',
-                        ( this.options.plugin || {} )[ 'scroll' ]
-                    );
+                    ui.activePlugin( this, 'TabScroll', ( this.options.plugin || {} ).scroll );
                 }
                 else {
                     ui.disposePlugin( this, 'TabScroll' );
@@ -395,7 +373,7 @@ define(function ( require ) {
 
             this.tabs.splice( index, 0, tabItem );
 
-            var trigger = dom.g( this.helper.getId( 'navigator' ) );
+            var trigger = dom.query( '[data-role=navigator]' );
             var tabElement = createTabElement( this, tabItem, false );
             trigger.insertBefore(
                 tabElement,
@@ -588,10 +566,7 @@ define(function ( require ) {
             this.triggers.some(
                 function ( tab, i ) {
                     if ( tab === tabElement ) {
-                        // 如果点在关闭区域上，则移除这个元素，
-                        // 其它情况为激活该元素
-                        var cls = this.helper.getPartClasses( 'close' )[ 0 ];
-                        if ( dom.hasClass( target, cls ) ) {
+                        if ( 'close' === dom.getData( target, 'role' ) ) {
                             this.removeByIndex( i );
                         }
                         else {
@@ -621,9 +596,7 @@ define(function ( require ) {
                     dom[ i === index ? 'show' : 'hide' ]( panel );
                 }
 
-                tab.helper[
-                    i === index ? 'addPartClasses' : 'removePartClasses'
-                ]( 'item-active', tab.triggers[ i ] );
+                dom[ i === index ? 'addClass' : 'removeClass' ]( tab.triggers[ i ], 'active' );
             }
         );
 
@@ -651,7 +624,7 @@ define(function ( require ) {
      * @param {Tab} tab 选项卡实例
      */
     function rebuildTabs( tab ) {
-        var trigger = dom.g( tab.helper.getId( 'navigator' ) );
+        var trigger = dom.query( '[data-role=navigator]', tab.main );
         var parentNode = trigger.parentNode;
         var referNode = trigger.nextSibling || null;
 
@@ -690,10 +663,10 @@ define(function ( require ) {
     function createTabElement( tab, tabItem, isActive ) {
         var element = document.createElement( 'li' );
 
-        tab.helper.addPartClasses( 'item', element );
+        dom.setData( element, 'role', 'trigger' );
 
         if ( isActive ) {
-            tab.helper.addPartClasses( 'item-active', element );
+            dom.addClass( element, 'active');
         }
 
         if ( tabItem.panel ) {

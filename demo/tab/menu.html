@@ -8,7 +8,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-    <link rel="stylesheet" href="../button/button.css">
     <link rel="stylesheet" href="tab.css">
     <link rel="stylesheet" href="demo.css">
     <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-6-10/esl.js"></script>
@@ -73,7 +72,11 @@
 </head>
 
 <body>
-    <header>Tab</header>
+    <s-bar ui="primary header">
+        <a href="./" class="ui-btn" data-ui="primary">&lt;返回</a>
+        <h1 data-ui="title">Tab - Saber UI</h1>
+        <a href="#" class="ui-btn" data-ui="primary">设置</a>
+    </s-bar>
 
     <div class="container">
         <h2>静态化构建</h2>
@@ -81,7 +84,7 @@
             <div class="loading">初始化中...</div>
 
             <h3>滚动导航</h3>
-            <div data-ui="type:Tab;scroll:true;">
+            <div s-ui="type:Tab;scroll:true;">
                 <ul data-role="navigator">
                     <li>教育</li>
                     <li>动漫</li>
@@ -106,10 +109,10 @@
             </div>
 
             <h3>复合列表</h3>
-            <div data-ui="type:Button;id:menu;">分类</div>
+            <a href="#" class="ui-btn" data-ui="primary" id="menu">分类</a>
             <div class="dropmenu dropmenu-hidden">
                 <div class="menu">
-                    <div data-ui="type:Tab;id:list;orientation:vertical;scroll:true;" data-ui-plugin-scroll="horizontal:false;">
+                    <div s-ui="type:Tab;id:list;orientation:vertical;scroll:true;" s-plugin-scroll="horizontal:false;">
                         <ul data-role="navigator">
                             <li data-for="a1">教育</li>
                             <li data-for="a2">动漫</li>
@@ -133,32 +136,29 @@
                         </ul>
                     </div>
                 </div>
-                <div class="panel">
+                <div class="panels">
                     <div>
-                        <div id="a1" class="ui-tab-panel">教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx</div>
-                        <div id="a2" class="ui-tab-panel">动漫xxxxxxxxxxxxxxxx</div>
-                        <div id="a3" class="ui-tab-panel">健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx</div>
-                        <div id="a4" class="ui-tab-panel">生活xxxxxxxxxxxxxxxx</div>
-                        <div id="a5" class="ui-tab-panel">游戏xxxxxxxxxxxxxxxx</div>
-                        <div id="a6" class="ui-tab-panel">美女xxxxxxxxxxxxxxxx</div>
-                        <div id="a7" class="ui-tab-panel">汽车xxxxxxxxxxxxxxxx</div>
-                        <div id="a8" class="ui-tab-panel">新闻xxxxxxxxxxxxxxxx</div>
-                        <div id="a9" class="ui-tab-panel">话题xxxxxxxxxxxxxxxx</div>
-                        <div id="a10" class="ui-tab-panel">焦点xxxxxxxxxxxxxxxx</div>
-                        <div id="a11" class="ui-tab-panel">贴吧xxxxxxxxxxxxxxxx</div>
-                        <div id="a12" class="ui-tab-panel">ECOMxxxxxxxxxxxxxxxx</div>
-                        <div id="a13" class="ui-tab-panel">中国xxxxxxxxxxxxxxxx</div>
-                        <div id="a14" class="ui-tab-panel">美国xxxxxxxxxxxxxxxx</div>
-                        <div id="a15" class="ui-tab-panel">北京xxxxxxxxxxxxxxxx</div>
-                        <div id="a16" class="ui-tab-panel">百度xxxxxxxxxxxxxxxx</div>
-                        <div id="a17" class="ui-tab-panel">大厦xxxxxxxxxxxxxxxx</div>
+                        <div id="a1" class="panel">教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx教育xxxxxxSFSDGEEGEHEHRHHEHxxxxxxxxxx</div>
+                        <div id="a2" class="panel">动漫xxxxxxxxxxxxxxxx</div>
+                        <div id="a3" class="panel">健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx健康xxxxxxxxxxxxxxxx</div>
+                        <div id="a4" class="panel">生活xxxxxxxxxxxxxxxx</div>
+                        <div id="a5" class="panel">游戏xxxxxxxxxxxxxxxx</div>
+                        <div id="a6" class="panel">美女xxxxxxxxxxxxxxxx</div>
+                        <div id="a7" class="panel">汽车xxxxxxxxxxxxxxxx</div>
+                        <div id="a8" class="panel">新闻xxxxxxxxxxxxxxxx</div>
+                        <div id="a9" class="panel">话题xxxxxxxxxxxxxxxx</div>
+                        <div id="a10" class="panel">焦点xxxxxxxxxxxxxxxx</div>
+                        <div id="a11" class="panel">贴吧xxxxxxxxxxxxxxxx</div>
+                        <div id="a12" class="panel">ECOMxxxxxxxxxxxxxxxx</div>
+                        <div id="a13" class="panel">中国xxxxxxxxxxxxxxxx</div>
+                        <div id="a14" class="panel">美国xxxxxxxxxxxxxxxx</div>
+                        <div id="a15" class="panel">北京xxxxxxxxxxxxxxxx</div>
+                        <div id="a16" class="panel">百度xxxxxxxxxxxxxxxx</div>
+                        <div id="a17" class="panel">大厦xxxxxxxxxxxxxxxx</div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <h2>动态化创建</h2>
-        <div id="wrapper4" class="wrapper"></div>
     </div>
 
     <script>
@@ -176,7 +176,6 @@
         function( Tap, dom, Scroll, ScrollBar, ui, Button, Tab ) {
             var $ = dom.query;
             var $$ = dom.queryAll;
-            var wrapper1 = $( '#wrapper3' );
             var wrapper2 = $( '#wrapper4' );
             var dropmenu = $( '.dropmenu' );
             var initSuccess = function () {
@@ -192,15 +191,17 @@
             Tap.mixin( $( '.container' ) );
 
 
+            // 更新全局配置
+            ui.config( { uiPrefix: 's-ui', pluginPrefix: 's-plugin' } );
+
 
             // 静态化
-            ui.init( wrapper1, { success: initSuccess } );
+            var tabs = ui.init( $( '#wrapper3' ), { success: initSuccess } );
 
-            var menu = ui.get( 'menu' );
             var tab = ui.get( 'list' );
             var panelScroll;
 
-            menu.onclick = function () {
+            $( '#menu' ).onclick = function () {
                 var cls = 'dropmenu-hidden';
                 var isHide = dom.hasClass( dropmenu, cls );
 
@@ -210,7 +211,7 @@
 
                 if ( isHide && !panelScroll) {
                     panelScroll = Scroll(
-                        $( '.panel' ),
+                        $( '.panels' ),
                         { scrollbar: true }
                     );
 
@@ -228,108 +229,6 @@
                 panelScroll && panelScroll.destroy();
                 panelScroll = null;
             });
-
-
-
-
-
-
-            // 动态化
-            wrapper2.innerHTML = '<h3>滚动导航</h3><h3>复合面板</h3>';
-
-            // navigator demo
-            var navigatorMenu = new Tab({
-                tabs: tab.get( 'tabs' ).map(function ( tab ) {
-                    return { title: tab.title };
-                }),
-                activeIndex: 2,
-                scroll: true, // 启用拖动插件
-                plugins: {
-                    // 拖动插件配置
-                    scroll: {
-                        horizontal: false // 禁止横向滚动
-                    }
-                }
-            });
-            navigatorMenu.insertBefore( $$( 'h3', wrapper2)[ 1 ] );
-
-            // dropmenu
-            var mymenu = new Button({ content: '分类' });
-            mymenu.appendTo( wrapper2 );
-            mymenu.onclick = function () {
-                if ( !mydropmenu ) {
-                    initDropMenu();
-                }
-
-                var cls = 'dropmenu-hidden';
-                var isHide = dom.hasClass( mydropmenu, cls );
-
-                dom[
-                    isHide ? 'removeClass' : 'addClass'
-                ]( mydropmenu, cls );
-
-                if ( isHide && !mytab ) {
-                    initDropMenuTab();
-                }
-
-                if ( isHide && !mypanelScroll ) {
-                    initDropMenuPanelScroll();
-                }
-            };
-
-            var mydropmenu;
-            function initDropMenu() {
-                mydropmenu = document.createElement( 'div' );
-                mydropmenu.className = 'dropmenu dropmenu-hidden';
-                mydropmenu.innerHTML = ''
-                    + '<div class="menu"></div>'
-                    + '<div class="panel">'
-                        + '<div id="mypanel" class="ui-tab-panel"></div>'
-                    + '</div>';
-                wrapper2.appendChild( mydropmenu );
-            }
-
-            var mytab;
-            function initDropMenuTab() {
-                mytab = new Tab({
-                    tabs: tab.get( 'tabs' ).map(function ( item ) {
-                        return { title: item.title };
-                    }),
-                    scroll: true,
-                    activeIndex: 2,
-                    orientation: 'vertical',
-                    plugins: {
-                        // 拖动插件配置
-                        scroll: {
-                            horizontal: false // 禁止横向滚动
-                        }
-                    }
-                });
-                mytab.on( 'change', function ( ev, data ) {
-                    var panel = tab.get( 'tabs' )[ data.index ].panel;
-                    $( '#mypanel' ).innerHTML = $( '#' + panel ).innerHTML;
-                    mypanelScroll && mypanelScroll.repaint();
-                });
-                mytab.on( 'afterdispose', function () {
-                    mypanelScroll && mypanelScroll.destroy();
-                    mypanelScroll = null;
-                });
-                mytab.appendTo( mydropmenu.querySelector( '.menu' ) );
-
-                mytab.get( 'plugins' )[ 'TabScroll' ].repaint();
-            }
-
-            var mypanelScroll;
-            function initDropMenuPanelScroll() {
-                mypanelScroll = Scroll(
-                    $( '#mypanel' ).parentNode,
-                    { scrollbar: true }
-                );
-            }
-
-
-            // 修复300ms点击延迟
-            Tap.mixin( mymenu.get( 'main' ) );
 
         }
     );

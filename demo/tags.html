@@ -1,0 +1,51 @@
+<!-- target:attrsFilter -->
+<!-- for: ${attrs} as ${attr}, ${key} -->
+<!-- if: ${key} !== 'ui' -->
+<!-- if: (${attr} === '') -->
+${key}:true;
+<!-- else -->
+${key}:${attr};
+<!-- /if -->
+<!-- /if -->
+<!-- /for -->
+
+
+<!-- target:s-bar -->
+<!-- if: ${pos} == 'start' -->
+<nav class="ui-bar" data-ui="${attrs.ui}">
+<!-- /if -->
+<!-- if: ${pos} == 'end' -->
+</nav>
+<!-- /if -->
+
+<!-- target:s-tab -->
+<!-- if: ${pos} == 'start' -->
+<div class="ui-tab" data-ui="${attrs.ui}" s-ui="type:Tab;<!-- use: attrsFilter(attrs=${attrs}) -->">
+<!-- /if -->
+<!-- if: ${pos} == 'end' -->
+</div>
+<!-- /if -->
+
+<!-- target:s-slider -->
+<!-- if: ${pos} == 'start' -->
+<div class="ui-slider" data-ui="${attrs.ui}" s-ui="type:Slider;<!-- use: attrsFilter(attrs=${attrs}) -->">
+<!-- /if -->
+<!-- if: ${pos} == 'end' -->
+</div>
+<!-- /if -->
+
+<!-- target:s-slider-wrapper -->
+<!-- if: ${pos} == 'start' -->
+<div data-role="wrapper">
+<!-- /if -->
+<!-- if: ${pos} == 'end' -->
+</div>
+<!-- /if -->
+
+<!-- target:s-slider-dot -->
+<!-- if: ${pos} == 'start' -->
+<div data-role="dot">
+<!-- /if -->
+<!-- if: ${pos} == 'end' -->
+</div>
+<!-- /if -->
