@@ -81,38 +81,23 @@
     <div class="container">
         <h2>普通 (支持翻转)</h2>
         <s-slider option="flex:true">
-            <div>
-                <a href="http://www.baidu.com/"><img src="./img/1.png"></a>
-                <p>1,啊大哥神的gas大噶的撒个说</p>
-            </div>
-            <div>
-                <a href="http://www.baidu.com/"><img src="./img/2.png"></a>
-                <p>2,按时打发上帝发誓的发方法</p>
-            </div>
-            <div>
-                <a href="http://www.baidu.com/"><img src="./img/3.png"></a>
-                <p>3,阿神的gas大噶撒旦gas的</p>
-            </div>
-            <div>
-                <a href="http://www.baidu.com/"><img src="./img/4.png"></a>
-                <p>4,啊神的gas大噶说的噶苏撒旦个</p>
-            </div>
+            <s-slider-item url="http://www.baidu.com/" image="./img/1.png" title="1,啊大哥神的gas大噶的撒个说"></s-slider-item>
+            <s-slider-item url="http://www.baidu.com/" image="./img/2.png" title="2,按时打发上帝发誓的发方法"></s-slider-item>
+            <s-slider-item url="http://www.baidu.com/" image="./img/3.png" title="3,阿神的gas大噶撒旦gas的"></s-slider-item>
+            <s-slider-item url="http://www.baidu.com/" image="./img/4.png" title="4,啊神的gas大噶说的噶苏撒旦个"></s-slider-item>
         </s-slider>
 
         <h2>无标题 (推荐)</h2>
         <s-slider option="autoDelay:3000">
-            <div>
-                <a href="http://www.baidu.com/"><img src="./img/2.png"></a>
-            </div>
-            <div>
-                <a href="http://www.baidu.com/"><img src="./img/4.png"></a>
-            </div>
-            <div>
-                <a href="http://www.baidu.com/"><img src="./img/1.png"></a>
-            </div>
-            <div>
-                <a href="http://www.baidu.com/"><img src="./img/3.png"></a>
-            </div>
+            <!-- var: myItems = [
+            {url: 'http://www.baidu.com/', image: './img/3.png'},
+            {url: 'http://www.baidu.com/', image: './img/2.png'},
+            {url: 'http://www.baidu.com/', image: './img/1.png'},
+            {url: 'http://www.baidu.com/', image: './img/4.png'}
+            ] -->
+            <!-- for: ${myItems} as ${item} -->
+            <div><a href="${item.url}"><img src="${item.image}"></a><div>
+            <!-- /for -->
         </s-slider>
 
         <h2>自带dot</h2>
@@ -175,7 +160,7 @@
         ],
         function( Tap, dom, ui, Slider ) {
             ui.config( { uiPrefix: 's-ui', pluginPrefix: 's-plugin' } );
-            sliders = ui.init();
+            ui.init();
         }
     );
 

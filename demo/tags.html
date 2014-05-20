@@ -26,6 +26,22 @@
 </div>
 <!-- /if -->
 
+<!-- target:s-tab-navigator -->
+<!-- if: ${pos} == 'start' -->
+<ul data-role="navigator" <!-- use: attrsFilter(attrs=${attrs}) -->>
+<!-- /if -->
+<!-- if: ${pos} == 'end' -->
+</ul>
+<!-- /if -->
+
+<!-- target:s-tab-trigger -->
+<!-- if: ${pos} == 'start' -->
+<li data-role="trigger" data-for="${attrs.for}" <!-- use: attrsFilter(attrs=${attrs}) -->>
+<!-- /if -->
+<!-- if: ${pos} == 'end' -->
+</li>
+<!-- /if -->
+
 <!-- target:s-slider -->
 <!-- if: ${pos} == 'start' -->
 <div class="ui-slider" data-ui="${attrs.ui}" s-ui="type:Slider;${attrs.option}" <!-- use: attrsFilter(attrs=${attrs}) -->>
@@ -37,6 +53,22 @@
 <!-- target:s-slider-wrapper -->
 <!-- if: ${pos} == 'start' -->
 <div data-role="wrapper">
+<!-- /if -->
+<!-- if: ${pos} == 'end' -->
+</div>
+<!-- /if -->
+
+<!-- target:s-slider-item -->
+<!-- if: ${pos} == 'start' -->
+<div>
+<!-- /if -->
+<!-- if: ${attrs.url} -->
+<a href="${attrs.url}"><img src="${attrs.image}"></a>
+<!-- else -->
+<img src="${attrs.image}">
+<!-- /if -->
+<!-- if: ${attrs.title} -->
+<p>${attrs.title}</p>
 <!-- /if -->
 <!-- if: ${pos} == 'end' -->
 </div>

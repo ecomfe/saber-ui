@@ -84,12 +84,13 @@
             <div class="loading">初始化中...</div>
 
             <s-tab option="activeIndex:2">
-                <ul data-role="navigator">
-                    <li data-for="a">A</li>
-                    <li style="color: red">No</li>
-                    <li data-for="b">B</li>
-                    <li data-for="c">C</li>
-                </ul>
+                <s-tab-navigator>
+                    <s-tab-trigger for="a">A</s-tab-trigger>
+                    <s-tab-trigger style="color: red">No</s-tab-trigger>
+                    <s-tab-trigger for="b">B</s-tab-trigger>
+                    <s-tab-trigger for="c">C</s-tab-trigger>
+                </s-tab-navigator>
+
                 <div id="a" class="panel">我是A</div>
                 <div id="b" class="panel">我是B</div>
                 <div id="c" class="panel">我是C</div>
