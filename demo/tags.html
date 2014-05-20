@@ -1,10 +1,10 @@
 <!-- target:attrsFilter -->
 <!-- for: ${attrs} as ${attr}, ${key} -->
-<!-- if: ${key} !== 'ui' -->
+<!-- if: ${key} !== 'ui' && ${key} !== 'option' -->
 <!-- if: (${attr} === '') -->
-${key}:true;
+ ${key}
 <!-- else -->
-${key}:${attr};
+ ${key}="${attr}"
 <!-- /if -->
 <!-- /if -->
 <!-- /for -->
@@ -20,7 +20,7 @@ ${key}:${attr};
 
 <!-- target:s-tab -->
 <!-- if: ${pos} == 'start' -->
-<div class="ui-tab" data-ui="${attrs.ui}" s-ui="type:Tab;<!-- use: attrsFilter(attrs=${attrs}) -->">
+<div class="ui-tab" data-ui="${attrs.ui}" s-ui="type:Tab;${attrs.option}" <!-- use: attrsFilter(attrs=${attrs}) -->>
 <!-- /if -->
 <!-- if: ${pos} == 'end' -->
 </div>
@@ -28,7 +28,7 @@ ${key}:${attr};
 
 <!-- target:s-slider -->
 <!-- if: ${pos} == 'start' -->
-<div class="ui-slider" data-ui="${attrs.ui}" s-ui="type:Slider;<!-- use: attrsFilter(attrs=${attrs}) -->">
+<div class="ui-slider" data-ui="${attrs.ui}" s-ui="type:Slider;${attrs.option}" <!-- use: attrsFilter(attrs=${attrs}) -->>
 <!-- /if -->
 <!-- if: ${pos} == 'end' -->
 </div>
